@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatHud.class)
 public abstract class MixinChatHud {
+    @Unique private long lastTime = 0;
+
     @Shadow @Final private MinecraftClient client;
 
     @Unique private List<String> hypixelStrings = new ArrayList<String>();
@@ -57,6 +59,7 @@ public abstract class MixinChatHud {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"), cancellable = true)
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
+        if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
             if (hypixelStrings.size() == 0) {
                 populateHypixelStrings();
@@ -64,6 +67,7 @@ public abstract class MixinChatHud {
             for (String s : hypixelStrings) {
                 if (message.getString().contains(s)) {
                     client.player.sendChatMessage("gg");
+                    this.lastTime = System.currentTimeMillis();
                     return;
                 }
             }
@@ -74,6 +78,7 @@ public abstract class MixinChatHud {
             for (String s : bedwarsPracticeStrings) {
                 if (message.getString().contains(s)) {
                     client.player.sendChatMessage("gg");
+                    this.lastTime = System.currentTimeMillis();
                     return;
                 }
             }
@@ -84,6 +89,7 @@ public abstract class MixinChatHud {
             for (String s : pvpLandStrings) {
                 if (message.getString().contains(s)) {
                     client.player.sendChatMessage("gg");
+                    this.lastTime = System.currentTimeMillis();
                     return;
                 }
             }
