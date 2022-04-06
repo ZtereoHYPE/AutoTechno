@@ -1,12 +1,10 @@
 {
   "required": true,
-  "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "minVersion": "0.8.5",
+  "package": "uk.debb.autogg.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
   "client": [
-    "ExampleMixin"
+    "MixinChatHud"
   ],
   "injectors": {
     "defaultRequire": 1

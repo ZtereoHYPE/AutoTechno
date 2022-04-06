@@ -1,6 +1,9 @@
-name: Build
+name: Publish
 
-on: [ push, pull_request, workflow_dispatch ]
+on:
+  release:
+    types:
+      - published
 
 jobs:
   build:
@@ -24,8 +27,7 @@ jobs:
         restore-keys: ${{ runner.os }}-brachyura
     - name: Build with Gradle
       run: ./gradlew remapJar
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+    - name: Publish to GitHub
+      uses: Kir-Antipov/mc-publish@v2.1
       with:
-        name: build-artifacts
-        path: build/libs
+        github-token: ${{ secrets.GITHUB_TOKEN }}
