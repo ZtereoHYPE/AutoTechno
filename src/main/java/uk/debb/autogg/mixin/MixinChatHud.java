@@ -127,6 +127,12 @@ public abstract class MixinChatHud {
                     client.player.sendChatMessage("gf");
                 }
             }
+        } else if (client.getCurrentServerEntry().address.contains("mcplayhd.net")) {
+            if (AutoGG.config.lMessages) {
+                if (message.toString().contains("Regardless, we wish you a lot of time playing.")) {
+                    client.player.sendChatMessage("L");
+                }
+            }
         }
     }
 }

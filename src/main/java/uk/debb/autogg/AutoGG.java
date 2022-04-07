@@ -11,7 +11,7 @@ import java.util.Collections;
 import net.fabricmc.api.ModInitializer;
 
 public class AutoGG implements ModInitializer {
-    public static AutoGGConfig config = new AutoGGConfig(true, true, true);
+    public static AutoGGConfig config = new AutoGGConfig(true, true, true, true);
     public Gson data = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
     Path configPath = Paths.get("config/autogg.json");
     static AutoGG autoGGStatic;
