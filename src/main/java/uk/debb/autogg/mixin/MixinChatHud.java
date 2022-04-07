@@ -74,6 +74,7 @@ public abstract class MixinChatHud {
     }
 
     @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
+        if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         for (String s : options) {
             if (messageRecieved.getString().contains(s)) {
                 client.player.sendChatMessage(messageToSend);
@@ -85,7 +86,6 @@ public abstract class MixinChatHud {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"), cancellable = true)
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
-        if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
             if (AutoGG.config.ggMessages) {
                 if (hypixelGGStrings.size() == 0) populateHypixelGGStrings();
