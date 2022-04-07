@@ -30,4 +30,6 @@ jobs:
     - name: Publish to GitHub
       uses: Kir-Antipov/mc-publish@v2.1
       with:
+        modrinth-id: rKo03LQl
+        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
