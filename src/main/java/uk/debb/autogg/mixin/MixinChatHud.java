@@ -25,7 +25,11 @@ public abstract class MixinChatHud {
     @Unique private List<String> bedwarsPracticeGGStrings = new ArrayList<String>();
     @Unique private List<String> pvpLandGGStrings = new ArrayList<String>();
 
-    @Unique private void populateHypixelStrings() {
+    @Unique private List<String> hypixelGLHFStrings = new ArrayList<String>();
+    @Unique private List<String> bedwarsPracticeGLHFStrings = new ArrayList<String>();
+    @Unique private List<String> pvpLandGLHFStrings = new ArrayList<String>();
+
+    @Unique private void populateHypixelGGStrings() {
         hypixelGGStrings.add("1st Killer -");
         hypixelGGStrings.add("1st Place -");
         hypixelGGStrings.add("Winner:");
@@ -44,19 +48,29 @@ public abstract class MixinChatHud {
         hypixelGGStrings.add("Winners -");
         hypixelGGStrings.add("Sumo Duel -");
     }
-
-    @Unique private void populateBedwarsPracticeStrings() {
+    @Unique private void populateBedwarsPracticeGGStrings() {
         bedwarsPracticeGGStrings.add("Winners -");
         bedwarsPracticeGGStrings.add("Game Won!");
         bedwarsPracticeGGStrings.add("Game Lost!");
         bedwarsPracticeGGStrings.add("The winning team is");
     }
-
-    @Unique private void populatePvpLandStrings() {
+    @Unique private void populatePvpLandGGStrings() {
         pvpLandGGStrings.add("The match has ended!");
         pvpLandGGStrings.add("Match Results");
         pvpLandGGStrings.add("Winner:");
         pvpLandGGStrings.add("Loser:");
+    }
+
+    @Unique private void populateHypixelGLHFStrings() {
+        hypixelGLHFStrings.add("The game starts in 1 second!");
+    }
+    @Unique private void populateBedwarsPracticeGLHFStrings() {
+        bedwarsPracticeGLHFStrings.add("Game starting in 1 seconds!");
+        bedwarsPracticeGLHFStrings.add("Game has started!");
+    }
+    @Unique private void populatePvpLandGLHFStrings() {
+        pvpLandGLHFStrings.add("The match is starting in 1 second.");
+        pvpLandGLHFStrings.add("The match has started!");
     }
 
     @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
@@ -73,19 +87,31 @@ public abstract class MixinChatHud {
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
-            if (hypixelGGStrings.size() == 0) populateHypixelStrings();
             if (AutoGG.config.ggMessages) {
+                if (hypixelGGStrings.size() == 0) populateHypixelGGStrings();
                 processChat(message, hypixelGGStrings, "gg");
             }
+            if (AutoGG.config.glhfMessages) {
+                if (hypixelGLHFStrings.size() == 0) populateHypixelGLHFStrings();
+                processChat(message, hypixelGLHFStrings, "glhf");
+            }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
-            if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeStrings();
             if (AutoGG.config.ggMessages) {
+                if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeGGStrings();
                 processChat(message, bedwarsPracticeGGStrings, "gg");
             }
+            if (AutoGG.config.glhfMessages) {
+                if (bedwarsPracticeGLHFStrings.size() == 0) populateBedwarsPracticeGLHFStrings();
+                processChat(message, bedwarsPracticeGLHFStrings, "glhf");
+            }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
-            if (pvpLandGGStrings.size() == 0) populatePvpLandStrings();
             if (AutoGG.config.ggMessages) {
+                if (pvpLandGGStrings.size() == 0) populatePvpLandGGStrings();
                 processChat(message, pvpLandGGStrings, "gg");
+            }
+            if (AutoGG.config.glhfMessages) {
+                if (pvpLandGLHFStrings.size() == 0) populatePvpLandGLHFStrings();
+                processChat(message, pvpLandGLHFStrings, "glhf");
             }
         }
     }
