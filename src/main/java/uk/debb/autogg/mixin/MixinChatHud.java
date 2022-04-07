@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
+import uk.debb.autogg.AutoGG;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -72,13 +74,19 @@ public abstract class MixinChatHud {
         if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
             if (hypixelGGStrings.size() == 0) populateHypixelStrings();
-            processChat(message, hypixelGGStrings, "gg");
+            if (AutoGG.config.ggMessages) {
+                processChat(message, hypixelGGStrings, "gg");
+            }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
             if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeStrings();
-            processChat(message, bedwarsPracticeGGStrings, "gg");
+            if (AutoGG.config.ggMessages) {
+                processChat(message, bedwarsPracticeGGStrings, "gg");
+            }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
             if (pvpLandGGStrings.size() == 0) populatePvpLandStrings();
-            processChat(message, pvpLandGGStrings, "gg");
+            if (AutoGG.config.ggMessages) {
+                processChat(message, pvpLandGGStrings, "gg");
+            }
         }
     }
 }
