@@ -103,7 +103,7 @@ public abstract class MixinChatHud {
             }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
             if (AutoGG.config.gfMessages) {
-                if (message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString())) {
+                if (message.toString().contains("FINAL KILL!")) {
                     client.player.sendChatMessage("gf");
                 }
             }
