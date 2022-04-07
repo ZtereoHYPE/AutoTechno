@@ -19,42 +19,42 @@ public abstract class MixinChatHud {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Unique private List<String> hypixelStrings = new ArrayList<String>();
-    @Unique private List<String> bedwarsPracticeStrings = new ArrayList<String>();
-    @Unique private List<String> pvpLandStrings = new ArrayList<String>();
+    @Unique private List<String> hypixelGGStrings = new ArrayList<String>();
+    @Unique private List<String> bedwarsPracticeGGStrings = new ArrayList<String>();
+    @Unique private List<String> pvpLandGGStrings = new ArrayList<String>();
 
     @Unique private void populateHypixelStrings() {
-        hypixelStrings.add("1st Killer -");
-        hypixelStrings.add("1st Place -");
-        hypixelStrings.add("Winner:");
-        hypixelStrings.add(" - Damage Dealt -");
-        hypixelStrings.add("Winning Team -");
-        hypixelStrings.add("1st -");
-        hypixelStrings.add("Winners:");
-        hypixelStrings.add("Winner:");
-        hypixelStrings.add("Winning Team:");
-        hypixelStrings.add(" won the game!");
-        hypixelStrings.add("Top Seeker:");
-        hypixelStrings.add("1st Place:");
-        hypixelStrings.add("Last team standing!");
-        hypixelStrings.add("Winner #1 (");
-        hypixelStrings.add("Top Survivors");
-        hypixelStrings.add("Winners -");
-        hypixelStrings.add("Sumo Duel -");
+        hypixelGGStrings.add("1st Killer -");
+        hypixelGGStrings.add("1st Place -");
+        hypixelGGStrings.add("Winner:");
+        hypixelGGStrings.add(" - Damage Dealt -");
+        hypixelGGStrings.add("Winning Team -");
+        hypixelGGStrings.add("1st -");
+        hypixelGGStrings.add("Winners:");
+        hypixelGGStrings.add("Winner:");
+        hypixelGGStrings.add("Winning Team:");
+        hypixelGGStrings.add(" won the game!");
+        hypixelGGStrings.add("Top Seeker:");
+        hypixelGGStrings.add("1st Place:");
+        hypixelGGStrings.add("Last team standing!");
+        hypixelGGStrings.add("Winner #1 (");
+        hypixelGGStrings.add("Top Survivors");
+        hypixelGGStrings.add("Winners -");
+        hypixelGGStrings.add("Sumo Duel -");
     }
 
     @Unique private void populateBedwarsPracticeStrings() {
-        bedwarsPracticeStrings.add("Winners -");
-        bedwarsPracticeStrings.add("Game Won!");
-        bedwarsPracticeStrings.add("Game Lost!");
-        bedwarsPracticeStrings.add("The winning team is");
+        bedwarsPracticeGGStrings.add("Winners -");
+        bedwarsPracticeGGStrings.add("Game Won!");
+        bedwarsPracticeGGStrings.add("Game Lost!");
+        bedwarsPracticeGGStrings.add("The winning team is");
     }
 
     @Unique private void populatePvpLandStrings() {
-        pvpLandStrings.add("The match has ended!");
-        pvpLandStrings.add("Match Results");
-        pvpLandStrings.add("Winner:");
-        pvpLandStrings.add("Loser:");
+        pvpLandGGStrings.add("The match has ended!");
+        pvpLandGGStrings.add("Match Results");
+        pvpLandGGStrings.add("Winner:");
+        pvpLandGGStrings.add("Loser:");
     }
 
     @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
@@ -71,14 +71,14 @@ public abstract class MixinChatHud {
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
-            if (hypixelStrings.size() == 0) populateHypixelStrings();
-            processChat(message, hypixelStrings, "gg");
+            if (hypixelGGStrings.size() == 0) populateHypixelStrings();
+            processChat(message, hypixelGGStrings, "gg");
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
-            if (bedwarsPracticeStrings.size() == 0) populateBedwarsPracticeStrings();
-            processChat(message, bedwarsPracticeStrings, "gg");
+            if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeStrings();
+            processChat(message, bedwarsPracticeGGStrings, "gg");
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
-            if (pvpLandStrings.size() == 0) populatePvpLandStrings();
-            processChat(message, pvpLandStrings, "gg");
+            if (pvpLandGGStrings.size() == 0) populatePvpLandStrings();
+            processChat(message, pvpLandGGStrings, "gg");
         }
     }
 }
