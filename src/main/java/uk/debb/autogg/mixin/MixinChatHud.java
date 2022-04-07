@@ -110,8 +110,10 @@ public abstract class MixinChatHud {
                 if (bedwarsPracticeGLHFStrings.size() == 0) populateBedwarsPracticeGLHFStrings();
                 processChat(message, bedwarsPracticeGLHFStrings, "glhf");
             }
-            if (message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString())) {
-                client.player.sendChatMessage("gf");
+            if (AutoGG.config.gfMessages) {
+                if ((message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString()))) {
+                    client.player.sendChatMessage("gf");
+                }
             }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
             if (AutoGG.config.ggMessages) {
@@ -129,7 +131,7 @@ public abstract class MixinChatHud {
             }
         } else if (client.getCurrentServerEntry().address.contains("mcplayhd.net")) {
             if (AutoGG.config.lMessages) {
-                if (message.toString().contains("Regardless, we wish you a lot of time playing.")) {
+                if (message.toString().contains("Regardless, we wish you a lot of fun playing.")) {
                     client.player.sendChatMessage("L");
                 }
             }
