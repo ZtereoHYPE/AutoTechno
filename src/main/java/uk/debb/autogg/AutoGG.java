@@ -14,21 +14,6 @@ public class AutoGG implements ModInitializer {
     public static AutoGGConfig config = new AutoGGConfig(true, true, true, true);
     public Gson data = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
     Path configPath = Paths.get("config/autogg.json");
-    static AutoGG autoGGStatic;
-
-    public static void saveDataToFileStatic() {
-        autoGGStatic.saveDataToFile();
-    }
-
-    public void saveDataToFile() {
-        if (config != null) {
-            try {
-                Files.write(configPath, Collections.singleton(data.toJson(config)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void saveData() {
         try {
@@ -44,7 +29,6 @@ public class AutoGG implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        autoGGStatic = this;
         saveData();
     }
 }
