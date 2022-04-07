@@ -5,8 +5,6 @@ import java.util.List;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
-import uk.debb.autogg.AutoGG;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,6 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import uk.debb.autogg.AutoGG;
 
 @Mixin(ChatHud.class)
 public abstract class MixinChatHud {
@@ -47,6 +46,7 @@ public abstract class MixinChatHud {
         hypixelGGStrings.add("Top Survivors");
         hypixelGGStrings.add("Winners -");
         hypixelGGStrings.add("Sumo Duel -");
+        hypixelGGStrings.add("Most Wool Placed -");
     }
     @Unique private void populateBedwarsPracticeGGStrings() {
         bedwarsPracticeGGStrings.add("Winners -");
@@ -95,6 +95,12 @@ public abstract class MixinChatHud {
                 if (hypixelGLHFStrings.size() == 0) populateHypixelGLHFStrings();
                 processChat(message, hypixelGLHFStrings, "glhf");
             }
+            if (AutoGG.config.gfMessages) {
+                if ((message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString())) ||
+                    (message.toString().contains(client.player.getName().asString() + " WINNER!")) || (message.toString().contains("SkyWars Experience (Kill)"))) {
+                    client.player.sendChatMessage("gf");
+                }
+            }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
             if (AutoGG.config.ggMessages) {
                 if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeGGStrings();
@@ -104,6 +110,9 @@ public abstract class MixinChatHud {
                 if (bedwarsPracticeGLHFStrings.size() == 0) populateBedwarsPracticeGLHFStrings();
                 processChat(message, bedwarsPracticeGLHFStrings, "glhf");
             }
+            if (message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString())) {
+                client.player.sendChatMessage("gf");
+            }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
             if (AutoGG.config.ggMessages) {
                 if (pvpLandGGStrings.size() == 0) populatePvpLandGGStrings();
@@ -112,6 +121,11 @@ public abstract class MixinChatHud {
             if (AutoGG.config.glhfMessages) {
                 if (pvpLandGLHFStrings.size() == 0) populatePvpLandGLHFStrings();
                 processChat(message, pvpLandGLHFStrings, "glhf");
+            }
+            if (AutoGG.config.gfMessages) {
+                if (message.getString().endsWith("slain by " + client.player.getName().asString() + ".")) {
+                    client.player.sendChatMessage("gf");
+                }
             }
         }
     }
