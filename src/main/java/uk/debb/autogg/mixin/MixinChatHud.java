@@ -57,42 +57,28 @@ public abstract class MixinChatHud {
         pvpLandStrings.add("Loser:");
     }
 
+    @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
+        for (String s : options) {
+            if (messageRecieved.getString().contains(s)) {
+                client.player.sendChatMessage(messageToSend);
+                this.lastTime = System.currentTimeMillis();
+                return;
+            }
+        }
+    }
+
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"), cancellable = true)
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
-            if (hypixelStrings.size() == 0) {
-                populateHypixelStrings();
-            }
-            for (String s : hypixelStrings) {
-                if (message.getString().contains(s)) {
-                    client.player.sendChatMessage("gg");
-                    this.lastTime = System.currentTimeMillis();
-                    return;
-                }
-            }
+            if (hypixelStrings.size() == 0) populateHypixelStrings();
+            processChat(message, hypixelStrings, "gg");
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
-            if (bedwarsPracticeStrings.size() == 0) {
-                populateBedwarsPracticeStrings();
-            }
-            for (String s : bedwarsPracticeStrings) {
-                if (message.getString().contains(s)) {
-                    client.player.sendChatMessage("gg");
-                    this.lastTime = System.currentTimeMillis();
-                    return;
-                }
-            }
+            if (bedwarsPracticeStrings.size() == 0) populateBedwarsPracticeStrings();
+            processChat(message, bedwarsPracticeStrings, "gg");
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
-            if (pvpLandStrings.size() == 0) {
-                populatePvpLandStrings();
-            }
-            for (String s : pvpLandStrings) {
-                if (message.getString().contains(s)) {
-                    client.player.sendChatMessage("gg");
-                    this.lastTime = System.currentTimeMillis();
-                    return;
-                }
-            }
+            if (pvpLandStrings.size() == 0) populatePvpLandStrings();
+            processChat(message, pvpLandStrings, "gg");
         }
     }
 }
