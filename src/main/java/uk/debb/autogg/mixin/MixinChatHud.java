@@ -88,7 +88,7 @@ public abstract class MixinChatHud {
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
             if (AutoGG.config.gfMessages) {
-                if ((message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.player.getName().asString())) ||
+                if ((message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.getSession().getUsername())) ||
                     (message.toString().contains(client.player.getName().asString() + " WINNER!")) || (message.toString().contains("SkyWars Experience (Kill)"))) {
                     client.player.sendChatMessage("gf");
                 }
@@ -103,7 +103,7 @@ public abstract class MixinChatHud {
             }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
             if (AutoGG.config.gfMessages) {
-                if (message.toString().contains("FINAL KILL!")) {
+                if (message.toString().contains("FINAL KILL!") && message.toString().contains("by " + client.getSession().getUsername())) {
                     client.player.sendChatMessage("gf");
                 }
             }
