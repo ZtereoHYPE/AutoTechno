@@ -47,6 +47,7 @@ public abstract class MixinChatHud {
         hypixelGGStrings.add("Winners -");
         hypixelGGStrings.add("Sumo Duel -");
         hypixelGGStrings.add("Most Wool Placed -");
+        hypixelGGStrings.add("Your Overall Winstreak:");
     }
     @Unique private void populateBedwarsPracticeGGStrings() {
         bedwarsPracticeGGStrings.add("Winners -");
