@@ -28,6 +28,10 @@ public abstract class MixinChatHud {
     @Unique private List<String> bedwarsPracticeGLHFStrings = new ArrayList<String>();
     @Unique private List<String> pvpLandGLHFStrings = new ArrayList<String>();
 
+    @Unique private List<String> hypixelGFStrings = new ArrayList<String>();
+    @Unique private List<String> bedwarsPracticeGFStrings = new ArrayList<String>();
+    @Unique private List<String> pvpLandGFStrings = new ArrayList<String>();
+
     @Unique private void populateHypixelGGStrings() {
         hypixelGGStrings.add("1st Killer -");
         hypixelGGStrings.add("1st Place -");
@@ -74,6 +78,17 @@ public abstract class MixinChatHud {
         pvpLandGLHFStrings.add("The match has started!");
     }
 
+    @Unique private void populateHypixelGFStrings() {
+        hypixelGFStrings.add("SkyWars Experience (Kill)");
+        hypixelGFStrings.add("coins! (Final Kill)");
+    }
+    @Unique private void populateBedwarsPracticeGFStrings() {
+        bedwarsPracticeGFStrings.add(client.getSession().getUsername() + " FINAL KILL!");
+    }
+    @Unique private void populatePvpLandGFStrings() {
+        pvpLandGFStrings.add("slain by " + client.getSession().getUsername());
+    }
+
     @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
         if (System.currentTimeMillis() - this.lastTime <= 3000) return;
         for (String s : options) {
@@ -89,10 +104,8 @@ public abstract class MixinChatHud {
     private void typeGG(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
             if (AutoGG.config.gfMessages) {
-                if ((message.toString().contains("FINAL KILL") && message.toString().contains("by " + client.getSession().getUsername())) ||
-                    (message.toString().contains(client.player.getName().asString() + " WINNER!")) || (message.toString().contains("SkyWars Experience (Kill)"))) {
-                    client.player.sendChatMessage("gf");
-                }
+                if (hypixelGFStrings.size() == 0) populateHypixelGFStrings();
+                processChat(message, hypixelGFStrings, "gf");
             }
             if (AutoGG.config.ggMessages) {
                 if (hypixelGGStrings.size() == 0) populateHypixelGGStrings();
@@ -104,9 +117,8 @@ public abstract class MixinChatHud {
             }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
             if (AutoGG.config.gfMessages) {
-                if (message.toString().contains("FINAL KILL!") && message.toString().contains("by " + client.getSession().getUsername())) {
-                    client.player.sendChatMessage("gf");
-                }
+                if (bedwarsPracticeGFStrings.size() == 0) populateBedwarsPracticeGFStrings();
+                processChat(message, bedwarsPracticeGFStrings, "gf");
             }
             if (AutoGG.config.ggMessages) {
                 if (bedwarsPracticeGGStrings.size() == 0) populateBedwarsPracticeGGStrings();
@@ -118,9 +130,8 @@ public abstract class MixinChatHud {
             }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
             if (AutoGG.config.gfMessages) {
-                if (message.getString().endsWith("slain by " + client.player.getName().asString() + ".")) {
-                    client.player.sendChatMessage("gf");
-                }
+                if (pvpLandGFStrings.size() == 0) populatePvpLandGFStrings();
+                processChat(message, pvpLandGFStrings, "gf");
             }
             if (AutoGG.config.ggMessages) {
                 if (pvpLandGGStrings.size() == 0) populatePvpLandGGStrings();
