@@ -23,14 +23,17 @@ public abstract class MixinChatHud {
     @Unique private List<String> hypixelGGStrings = new ArrayList<String>();
     @Unique private List<String> bedwarsPracticeGGStrings = new ArrayList<String>();
     @Unique private List<String> pvpLandGGStrings = new ArrayList<String>();
+    @Unique private List<String> minemenGGStrings = new ArrayList<String>();
 
     @Unique private List<String> hypixelGLHFStrings = new ArrayList<String>();
     @Unique private List<String> bedwarsPracticeGLHFStrings = new ArrayList<String>();
     @Unique private List<String> pvpLandGLHFStrings = new ArrayList<String>();
+    @Unique private List<String> minemenGLHFStrings = new ArrayList<String>();
 
     @Unique private List<String> hypixelGFStrings = new ArrayList<String>();
     @Unique private List<String> bedwarsPracticeGFStrings = new ArrayList<String>();
     @Unique private List<String> pvpLandGFStrings = new ArrayList<String>();
+    @Unique private List<String> minemenGFStrings = new ArrayList<String>();
 
     @Unique private void populateHypixelGGStrings() {
         hypixelGGStrings.add("1st Killer -");
@@ -65,6 +68,9 @@ public abstract class MixinChatHud {
         pvpLandGGStrings.add("Winner:");
         pvpLandGGStrings.add("Loser:");
     }
+    @Unique private void populateMinemenGGStrings() {
+        minemenGGStrings.add("Match Results");
+    }
 
     @Unique private void populateHypixelGLHFStrings() {
         hypixelGLHFStrings.add("The game starts in 1 second!");
@@ -77,6 +83,9 @@ public abstract class MixinChatHud {
         pvpLandGLHFStrings.add("The match is starting in 1 second.");
         pvpLandGLHFStrings.add("The match has started!");
     }
+    @Unique private void populateMinemenGLHFStrings() {
+        minemenGLHFStrings.add("1...");
+    }
 
     @Unique private void populateHypixelGFStrings() {
         hypixelGFStrings.add("SkyWars Experience (Kill)");
@@ -87,6 +96,9 @@ public abstract class MixinChatHud {
     }
     @Unique private void populatePvpLandGFStrings() {
         pvpLandGFStrings.add("slain by " + client.getSession().getUsername());
+    }
+    @Unique private void populateMinemenGFStrings() {
+        minemenGFStrings.add("killed by " + client.getSession().getUsername() + "!");
     }
 
     @Unique private void processChat(Text messageRecieved, List<String> options, String messageToSend) {
@@ -140,6 +152,19 @@ public abstract class MixinChatHud {
             if (AutoGG.config.glhfMessages) {
                 if (pvpLandGLHFStrings.size() == 0) populatePvpLandGLHFStrings();
                 processChat(message, pvpLandGLHFStrings, "glhf");
+            }
+        } else if (client.getCurrentServerEntry().address.contains("minemen.club")) {
+            if (AutoGG.config.gfMessages) {
+                if (minemenGFStrings.size() == 0) populateMinemenGFStrings();
+                processChat(message, minemenGFStrings, "gf");
+            }
+            if (AutoGG.config.ggMessages) {
+                if (minemenGGStrings.size() == 0) populateMinemenGGStrings();
+                processChat(message, minemenGGStrings, "gg");
+            }
+            if (AutoGG.config.glhfMessages) {
+                if (minemenGLHFStrings.size() == 0) populateMinemenGLHFStrings();
+                processChat(message, minemenGLHFStrings, "glhf");
             }
         } else if (client.getCurrentServerEntry().address.contains("mcplayhd.net")) {
             if (AutoGG.config.lMessages) {
