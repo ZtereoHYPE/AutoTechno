@@ -16,7 +16,12 @@ public class EventDetector {
     private long lastTime = 0;
     private final MinecraftClient client = MinecraftClient.getInstance();
 
-    private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<>();
+    private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<Server, Map<String, Event>>() {{
+        put(Server.HYPIXEL, new HashMap<String, Event>());
+        put(Server.BEDWARS_PRACTICE, new HashMap<String, Event>());
+        put(Server.PVPLAND, new HashMap<String, Event>());
+        put(Server.MINEMEN, new HashMap<String, Event>());
+    }};
 
     private final boolean killMessages;
     private final boolean startMessages;
@@ -29,10 +34,6 @@ public class EventDetector {
     }
 
     private void initMessages() {
-        for (Server server : Server.values()) {
-            serverMessageEvents.put(server, new HashMap<>());
-        }
-
         // END STRINGS
         serverMessageEvents.get(Server.HYPIXEL).put("Your Overall Winstreak:", Event.END_GAME);
         serverMessageEvents.get(Server.HYPIXEL).put("1st Place -", Event.END_GAME);
