@@ -22,9 +22,9 @@ public class EventDetector {
     private final boolean endMessages;
 
     public EventDetector(AutoTechnoConfig config) {
-        this.endMessages = config.endMessages;
-        this.killMessages = config.killMessages;
-        this.startMessages = config.startMessages;
+        this.endMessages = config.sendEndMessages;
+        this.killMessages = config.sendKillMessages;
+        this.startMessages = config.sendStartMessages;
     }
 
     private void initMessages() {
@@ -105,10 +105,4 @@ public class EventDetector {
         }
         return null;
     }
-
-//    public String getRandomMessage(MessageCategory cat) {
-//        if (cat == MessageCategory.END_GAME) {
-//            retu
-//        }
-//    }
 }

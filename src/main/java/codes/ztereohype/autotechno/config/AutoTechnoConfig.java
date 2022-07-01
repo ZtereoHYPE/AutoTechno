@@ -18,24 +18,24 @@ public class AutoTechnoConfig {
     public static final Path CONFIG_PATH = Paths.get("config/autogg.json");
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-    public boolean endMessages;
-    public boolean startMessages;
-    public boolean killMessages;
+    public boolean sendEndMessages;
+    public boolean sendStartMessages;
+    public boolean sendKillMessages;
 
-    public List<String> endMessageList = new ArrayList<>();
-    public List<String> startMessageList = new ArrayList<>();
-    public List<String> killMessageList = new ArrayList<>();
+    public String[] endMessageList;
+    public String[] startMessageList;
+    public String[] killMessageList;
 
-    private AutoTechnoConfig(boolean endMessages, boolean startMessages, boolean killMessages, List<String> endMessageList, List<String> startMessageList, List<String> killMessageList) {
-        this.endMessages = endMessages;
-        this.startMessages = startMessages;
-        this.killMessages = killMessages;
+    private AutoTechnoConfig(boolean sendEndMessages, boolean sendStartMessages, boolean sendKillMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
+        this.sendEndMessages = sendEndMessages;
+        this.sendStartMessages = sendStartMessages;
+        this.sendKillMessages = sendKillMessages;
         this.endMessageList = endMessageList;
         this.startMessageList = startMessageList;
         this.killMessageList = killMessageList;
     }
 
-    public static AutoTechnoConfig get(boolean endMessages, boolean startMessages, boolean finalMessages, List<String> endMessageList, List<String> startMessageList, List<String> killMessageList) {
+    public static AutoTechnoConfig get(boolean endMessages, boolean startMessages, boolean finalMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
         try {
             if (CONFIG_PATH.toFile().exists()) {
                 return GSON.fromJson(new String(Files.readAllBytes(CONFIG_PATH)), AutoTechnoConfig.class);

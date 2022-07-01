@@ -5,22 +5,21 @@ import codes.ztereohype.autotechno.client.ClientWrapper;
 import codes.ztereohype.autotechno.config.AutoTechnoConfig;
 import net.fabricmc.api.ModInitializer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AutoTechno implements ModInitializer {
     public static AutoTechnoConfig config;
     static {
-        List<String> endMessageList = new ArrayList<String>() {{
-            add("");
-        }};
-        List<String> startMessageList = new ArrayList<String>() {{
-            add("");
-        }};
-        List<String> killMessageList = new ArrayList<String() {{
-            add("");
-        }};
-        config = AutoTechnoConfig.get(true, true, true, endMessageList, startMessageList, killMessageList);
+        String[] startMessages = new String[] {"Good luck, and may Techno's unmatched skill be with you",
+                                              "RIP Techno, you will be missed.",
+                                              "Let's drop kick some children!"};
+        String[] killMessages = new String[] {"Blood for the Blood God",
+                                              "In the name of techno",
+                                              "This ones for technoblade",
+                                              "Officer, I drop-kicked them in self defense!"};
+        String[] endMessages = new String[] {"gg ez",
+                                             "good game",
+                                             "Rest in Peace Technoblade"};
+
+        config = AutoTechnoConfig.get(true, true, true, startMessages, killMessages, endMessages);
     }
     public static ClientWrapper client;
     public static EventDetector detector;
