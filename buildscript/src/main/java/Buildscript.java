@@ -5,9 +5,7 @@ import io.github.coolcrabs.brachyura.fabric.FabricContext;
 import io.github.coolcrabs.brachyura.fabric.FabricContext.ModDependencyCollector;
 import io.github.coolcrabs.brachyura.fabric.FabricLoader;
 import io.github.coolcrabs.brachyura.fabric.FabricMaven;
-import io.github.coolcrabs.brachyura.fabric.Intermediary;
 import io.github.coolcrabs.brachyura.fabric.SimpleFabricProject;
-import io.github.coolcrabs.brachyura.fabric.SimpleFabricProject.SimpleFabricContext;
 import io.github.coolcrabs.brachyura.fabric.Yarn;
 import io.github.coolcrabs.brachyura.maven.Maven;
 import io.github.coolcrabs.brachyura.maven.MavenId;
@@ -18,18 +16,13 @@ import net.fabricmc.mappingio.tree.MappingTree;
 
 public class Buildscript extends SimpleFabricProject {
     @Override
-    protected FabricContext createContext() {
-        return new IntermediaryPatcher();
-    }
-
-    @Override
     public VersionMeta createMcVersion() {
         return Minecraft.getVersion(Versions.MINECRAFT_VERSION);
     }
 
     @Override
     public MappingTree createMappings() {
-        return Yarn.ofMaven("https://maven.legacyfabric.net", FabricMaven.yarn(Versions.YARN_VERSION)).tree;
+        return Yarn.ofMaven(FabricMaven.URL, FabricMaven.yarn(Versions.YARN_VERSION)).tree;
     }
 
     @Override
@@ -66,13 +59,5 @@ public class Buildscript extends SimpleFabricProject {
     public ProcessorChain resourcesProcessingChain() {
         // Adds version to fabric.mod.json
         return new ProcessorChain(super.resourcesProcessingChain(), new FmjVersionFixer(this));
-    }
-
-    public class IntermediaryPatcher extends SimpleFabricContext {
-        @Override
-        protected MappingTree createIntermediary() {
-            // use legacy fabric intermediary
-            return Intermediary.ofMaven("https://maven.legacyfabric.net", new MavenId("net.fabricmc", "intermediary", Versions.MINECRAFT_VERSION)).tree;
-        }
     }
 }
