@@ -23,8 +23,11 @@ public abstract class MixinChatHud {
     private void sendRespect(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         Event event = AutoTechno.detector.scanForEvent(message.getString());
 
+        System.out.println(event);
+
         if (event != null) {
             String technoMessage = AutoTechno.messageRandomiser.getRandomMessage(event);
+            System.out.println(technoMessage);
             AutoTechno.client.sendMessage(technoMessage);
         }
     }
