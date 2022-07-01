@@ -63,4 +63,10 @@ public class Buildscript extends SimpleFabricProject {
         // Adds version to fabric.mod.json
         return new ProcessorChain(super.resourcesProcessingChain(), new FmjVersionFixer(this));
     }
+
+    @Override
+    public int getJavaVersion() {
+        // Default is Java 8
+        return Versions.JAVA_VERSION;
+    }
 }
