@@ -11,8 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AutoTechnoConfig {
     public static final Path CONFIG_PATH = Paths.get("config/autogg.json");
@@ -22,17 +24,17 @@ public class AutoTechnoConfig {
     public boolean sendStartMessages;
     public boolean sendKillMessages;
 
-    public String[] endMessageList;
-    public String[] startMessageList;
-    public String[] killMessageList;
+    public List<String> endMessageList;
+    public List<String> startMessageList;
+    public List<String> killMessageList;
 
     private AutoTechnoConfig(boolean sendEndMessages, boolean sendStartMessages, boolean sendKillMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
         this.sendEndMessages = sendEndMessages;
         this.sendStartMessages = sendStartMessages;
         this.sendKillMessages = sendKillMessages;
-        this.endMessageList = endMessageList;
-        this.startMessageList = startMessageList;
-        this.killMessageList = killMessageList;
+        this.endMessageList = Arrays.asList(endMessageList);
+        this.startMessageList = Arrays.asList(startMessageList);
+        this.killMessageList = Arrays.asList(endMessageList);
     }
 
     public static AutoTechnoConfig get(boolean endMessages, boolean startMessages, boolean finalMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
