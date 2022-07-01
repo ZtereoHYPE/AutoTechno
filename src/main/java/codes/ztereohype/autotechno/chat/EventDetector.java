@@ -17,10 +17,10 @@ public class EventDetector {
     private final MinecraftClient client = MinecraftClient.getInstance();
 
     private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<Server, Map<String, Event>>() {{
-        put(Server.HYPIXEL, new HashMap<String, Event>());
-        put(Server.BEDWARS_PRACTICE, new HashMap<String, Event>());
-        put(Server.PVPLAND, new HashMap<String, Event>());
-        put(Server.MINEMEN, new HashMap<String, Event>());
+        put(Server.HYPIXEL, new HashMap<>());
+        put(Server.BEDWARS_PRACTICE, new HashMap<>());
+        put(Server.PVPLAND, new HashMap<>());
+        put(Server.MINEMEN, new HashMap<>());
     }};
 
     private final boolean killMessages;
@@ -31,6 +31,7 @@ public class EventDetector {
         this.endMessages = config.sendEndMessages;
         this.killMessages = config.sendKillMessages;
         this.startMessages = config.sendStartMessages;
+        initMessages();
     }
 
     private void initMessages() {
