@@ -19,7 +19,7 @@ public class MessageRandomiser {
 
     public String getRandomMessage(Event event) {
         List<String> pickedList = messagesMap.get(event);
-        int randomIndex = RANDOM.nextInt(pickedList.size()) - 1;
+        int randomIndex = RANDOM.nextInt(pickedList.size() - 1);
 
         return pickedList.get(randomIndex);
     }
