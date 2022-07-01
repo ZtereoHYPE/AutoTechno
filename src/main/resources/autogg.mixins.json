@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8.5",
-  "package": "uk.debb.autogg.mixin",
+  "package": "codes.ztereohype.autotechno.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
     "MixinChatHud"
