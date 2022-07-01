@@ -20,9 +20,9 @@ public class AutoTechno implements ModInitializer {
                                                "This ones for technoblade",
                                                "Officer, I drop-kicked them in self defense!" };
 
-        String[] endMessages = new String[] { "gg ez", "good game", "Rest in Peace Technoblade", "Technoblade never dies" };
+        String[] endMessages = new String[] { "gg ez", "good game", "Rest in Peace Technoblade", "Technoblade never dies", "so long nerds" };
 
-        config = AutoTechnoConfig.get(true, true, true, startMessages, killMessages, endMessages);
+        config = AutoTechnoConfig.get(true, true, true, endMessages, startMessages, killMessages);
     }
 
     public static ClientWrapper client;
