@@ -41,7 +41,9 @@ public class Buildscript extends SimpleFabricProject {
     }
 
     @Override
-    public void getModDependencies(ModDependencyCollector d) {}
+    public void getModDependencies(ModDependencyCollector d) {
+        d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "lazydfu", Versions.LAZYDFU_VERSION), ModDependencyFlag.RUNTIME);
+    }
 
     @Override
     public BrachyuraDecompiler decompiler() {
