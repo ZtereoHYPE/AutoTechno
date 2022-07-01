@@ -95,9 +95,13 @@ public class EventDetector {
 
         this.lastTime = System.currentTimeMillis();
 
+        System.out.println(server);
+
         for (String s : serverMessageEvents.get(server).keySet()) {
             Event event = null;
             if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
+
+            System.out.println(s + " :attempting match with: " + message);
 
             //todo: unhorrible this
             if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages)
