@@ -15,6 +15,7 @@ public class ClientWrapper {
     }
 
     public @Nullable Server getCurrentServer() {
+        if (client.getCurrentServerEntry() == null) return null;
         String address = client.getCurrentServerEntry().address;
 
         //todo: change to a matcher
