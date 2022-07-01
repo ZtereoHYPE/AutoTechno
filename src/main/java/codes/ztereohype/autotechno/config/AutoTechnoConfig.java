@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AutoTechnoConfig {
-    public static final Path CONFIG_PATH = Paths.get("config/autogg.json");
+    public static final Path CONFIG_PATH = Paths.get("config/autotechno.json");
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
     public boolean sendEndMessages;
@@ -37,7 +37,7 @@ public class AutoTechnoConfig {
         this.sendKillMessages = sendKillMessages;
         this.endMessageList = Arrays.asList(endMessageList);
         this.startMessageList = Arrays.asList(startMessageList);
-        this.killMessageList = Arrays.asList(endMessageList);
+        this.killMessageList = Arrays.asList(killMessageList);
     }
 
     public static AutoTechnoConfig get(boolean endMessages,
