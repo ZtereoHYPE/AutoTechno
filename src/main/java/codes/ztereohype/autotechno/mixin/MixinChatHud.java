@@ -116,7 +116,7 @@ public abstract class MixinChatHud {
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
     private void sendRespect(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
         if (client.getCurrentServerEntry().address.contains("hypixel.net")) {
-            if (AutoTechno.config.finalMessages) {
+            if (AutoTechno.config.killMessages) {
                 if (hypixelFinalStrings.size() == 0) populateHypixelFinalStrings();
                 processChat(message, hypixelFinalStrings, "Blood for the Blood God");
             }
@@ -129,7 +129,7 @@ public abstract class MixinChatHud {
                 processChat(message, hypixelStartStrings, "Good luck, and may Techno's unmatched skill be in you");
             }
         } else if (client.getCurrentServerEntry().address.contains("bedwarspractice.club")) {
-            if (AutoTechno.config.finalMessages) {
+            if (AutoTechno.config.killMessages) {
                 if (bedwarsPracticeFinalStrings.size() == 0) populateBedwarsPracticeFinalStrings();
                 processChat(message, bedwarsPracticeFinalStrings, "Blood for the Blood God");
             }
@@ -142,7 +142,7 @@ public abstract class MixinChatHud {
                 processChat(message, bedwarsPracticeStartStrings, "Good luck, and may Techno's unmatched skill be in you");
             }
         } else if (client.getCurrentServerEntry().address.contains("pvp.land")) {
-            if (AutoTechno.config.finalMessages) {
+            if (AutoTechno.config.killMessages) {
                 if (pvpLandFinalStrings.size() == 0) populatePvpLandFinalStrings();
                 processChat(message, pvpLandFinalStrings, "Blood for the Blood God");
             }
@@ -155,7 +155,7 @@ public abstract class MixinChatHud {
                 processChat(message, pvpLandStartStrings, "Good luck, and may Techno's unmatched skill be in you");
             }
         } else if (client.getCurrentServerEntry().address.contains("minemen.club")) {
-            if (AutoTechno.config.finalMessages) {
+            if (AutoTechno.config.killMessages) {
                 if (minemenFinalStrings.size() == 0) populateMinemenFinalStrings();
                 processChat(message, minemenFinalStrings, "Blood for the Blood God");
             }

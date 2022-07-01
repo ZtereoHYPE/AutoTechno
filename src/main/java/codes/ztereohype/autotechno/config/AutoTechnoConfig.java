@@ -3,7 +3,6 @@ package codes.ztereohype.autotechno.config;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -19,12 +18,12 @@ public class AutoTechnoConfig {
 
     public boolean endMessages;
     public boolean startMessages;
-    public boolean finalMessages;
+    public boolean killMessages;
 
-    private AutoTechnoConfig(boolean endMessages, boolean startMessages, boolean finalMessages) {
+    private AutoTechnoConfig(boolean endMessages, boolean startMessages, boolean killMessages) {
         this.endMessages = endMessages;
         this.startMessages = startMessages;
-        this.finalMessages = finalMessages;
+        this.killMessages = killMessages;
     }
 
     public static AutoTechnoConfig get(boolean endMessages, boolean startMessages, boolean finalMessages) {

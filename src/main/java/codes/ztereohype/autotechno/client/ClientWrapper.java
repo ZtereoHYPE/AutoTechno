@@ -14,14 +14,14 @@ public class ClientWrapper {
         return this.client;
     }
 
-    public @Nullable KnownServer getCurrentServer() {
+    public @Nullable Server getCurrentServer() {
         String address = client.getCurrentServerEntry().address;
 
         //todo: change to a matcher
-        if (address.contains("hypixel.net")) return KnownServer.HYPIXEL;
-        else if (address.contains("bedwarspractice.club")) return KnownServer.BEDWARS_PRACTICE;
-        else if (address.contains("pvp.land")) return KnownServer.PVPLAND;
-        else if (address.contains("minemen.club")) return KnownServer.MINEMEN;
+        if (address.contains("hypixel.net")) return Server.HYPIXEL;
+        else if (address.contains("bedwarspractice.club")) return Server.BEDWARS_PRACTICE;
+        else if (address.contains("pvp.land")) return Server.PVPLAND;
+        else if (address.contains("minemen.club")) return Server.MINEMEN;
         else return null;
     }
 
