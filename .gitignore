@@ -1,5 +1,5 @@
-# brachyura
-.brachyura/
+# gradle
+.gradle/
 build/
 out/
 classes/
