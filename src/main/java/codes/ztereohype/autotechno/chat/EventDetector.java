@@ -7,7 +7,8 @@ import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EventDetector {
     private static final long WAIT_TIME = 3000L;
@@ -99,9 +100,8 @@ public class EventDetector {
             if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
 
             //todo: unhorrible this
-            if (event == Event.KILL && this.killMessages ||
-                event == Event.START_GAME && this.startMessages ||
-                event == Event.END_GAME && this.endMessages) return event;
+            if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages)
+                return event;
         }
         return null;
     }

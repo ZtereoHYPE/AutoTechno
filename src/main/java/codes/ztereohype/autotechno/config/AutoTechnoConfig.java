@@ -10,11 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AutoTechnoConfig {
     public static final Path CONFIG_PATH = Paths.get("config/autogg.json");
@@ -28,7 +26,12 @@ public class AutoTechnoConfig {
     public List<String> startMessageList;
     public List<String> killMessageList;
 
-    private AutoTechnoConfig(boolean sendEndMessages, boolean sendStartMessages, boolean sendKillMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
+    private AutoTechnoConfig(boolean sendEndMessages,
+                             boolean sendStartMessages,
+                             boolean sendKillMessages,
+                             String[] endMessageList,
+                             String[] startMessageList,
+                             String[] killMessageList) {
         this.sendEndMessages = sendEndMessages;
         this.sendStartMessages = sendStartMessages;
         this.sendKillMessages = sendKillMessages;
@@ -37,7 +40,12 @@ public class AutoTechnoConfig {
         this.killMessageList = Arrays.asList(endMessageList);
     }
 
-    public static AutoTechnoConfig get(boolean endMessages, boolean startMessages, boolean finalMessages, String[] endMessageList, String[] startMessageList, String[] killMessageList) {
+    public static AutoTechnoConfig get(boolean endMessages,
+                                       boolean startMessages,
+                                       boolean finalMessages,
+                                       String[] endMessageList,
+                                       String[] startMessageList,
+                                       String[] killMessageList) {
         try {
             if (CONFIG_PATH.toFile().exists()) {
                 return GSON.fromJson(new String(Files.readAllBytes(CONFIG_PATH)), AutoTechnoConfig.class);
