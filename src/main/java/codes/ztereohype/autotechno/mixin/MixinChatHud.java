@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import codes.ztereohype.autotechno.AutoTechno;
+import codes.ztereohype.autotechno.chat.Event;
 import codes.ztereohype.autotechno.chat.EventDetector;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
@@ -20,6 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinChatHud {
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
     private void sendRespect(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
-       AutoTechno.messageRandomiser.getRandomMessage(AutoTechno.detector.scanForEvent(message.getString()));
+        Event event = AutoTechno.detector.scanForEvent(message.getString());
+
+        if (event != null) {
+            String technoMessage = AutoTechno.messageRandomiser.getRandomMessage(event);
+            AutoTechno.client.sendMessage(technoMessage);
+        }
     }
 }

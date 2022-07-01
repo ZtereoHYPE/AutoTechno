@@ -2,6 +2,7 @@ package codes.ztereohype.autotechno.chat;
 
 import codes.ztereohype.autotechno.AutoTechno;
 import codes.ztereohype.autotechno.config.AutoTechnoConfig;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
