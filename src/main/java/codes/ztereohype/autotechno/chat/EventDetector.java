@@ -90,7 +90,7 @@ public class EventDetector {
     }
 
     public @Nullable Event scanForEvent(@NotNull String message) {
-        if (System.currentTimeMillis() - this.lastTime <= 3000) return null;
+        if (System.currentTimeMillis() - this.lastTime <= WAIT_TIME) return null;
 
         Server server = AutoTechno.client.getCurrentServer();
         if (server == null) return null;
