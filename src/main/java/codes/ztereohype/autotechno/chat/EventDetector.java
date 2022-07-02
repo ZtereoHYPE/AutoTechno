@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventDetector {
-    private final MinecraftClient client = MinecraftClient.getInstance();
-
     private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<Server, Map<String, Event>>() {{
         put(Server.HYPIXEL, new HashMap<>());
         put(Server.BEDWARS_PRACTICE, new HashMap<>());
@@ -98,7 +96,7 @@ public class EventDetector {
         if (server == null) return null;
 
         if (server == Server.MINEPLEX && message.contains("You have been sent from ") && message.contains(" to Lobby")) {
-            this.mineplexStart = false;
+            mineplexStart = false;
         }
 
         for (String s : serverMessageEvents.get(server).keySet()) {
@@ -106,11 +104,10 @@ public class EventDetector {
             if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
 
             if (server == Server.MINEPLEX && event == Event.END_GAME) {
-                this.mineplexStart = !mineplexStart;
-                return this.mineplexStart ? Event.START_GAME : Event.END_GAME;
+                mineplexStart = !mineplexStart;
+                return mineplexStart ? Event.START_GAME : Event.END_GAME;
             }
 
-            //todo: unhorrible this
             if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages) {
                 return event;
             }
