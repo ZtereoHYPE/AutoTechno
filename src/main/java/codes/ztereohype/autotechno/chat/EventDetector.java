@@ -25,7 +25,7 @@ public class EventDetector {
     private final boolean startMessages;
     private final boolean endMessages;
 
-    private boolean mineplexStart = false;
+    public static boolean mineplexStart = false;
 
     public EventDetector(AutoTechnoConfig config) {
         this.endMessages = config.sendEndMessages;
@@ -96,6 +96,10 @@ public class EventDetector {
     public @Nullable Event scanForEvent(@NotNull String message) {
         Server server = AutoTechno.client.getCurrentServer();
         if (server == null) return null;
+
+        if (server == Server.MINEPLEX && message.contains("You have been sent from ") && message.contains(" to Lobby")) {
+            this.mineplexStart = false;
+        }
 
         for (String s : serverMessageEvents.get(server).keySet()) {
             Event event = null;
