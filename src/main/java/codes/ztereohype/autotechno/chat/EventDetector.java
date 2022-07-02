@@ -105,8 +105,16 @@ public class EventDetector {
                 return mineplexStart ? Event.START_GAME : Event.END_GAME;
             }
 
-            if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages) {
-                return event;
+            switch(event) {
+                case KILL:
+                    if (this.killMessages) return event;
+                    break;
+                case START_GAME:
+                    if (this.startMessages) return event;
+                    break;
+                case END_GAME:
+                    if (this.endMessages) return event;
+                    break;
             }
         }
         return null;
