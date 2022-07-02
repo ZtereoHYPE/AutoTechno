@@ -7,7 +7,7 @@ import codes.ztereohype.autotechno.config.AutoTechnoConfig;
 import net.fabricmc.api.ModInitializer;
 
 public class AutoTechno implements ModInitializer {
-    public static AutoTechnoConfig config;
+    public static final AutoTechnoConfig config;
     public static ClientWrapper client;
     public static EventDetector detector;
     public static MessageRandomiser messageRandomiser;

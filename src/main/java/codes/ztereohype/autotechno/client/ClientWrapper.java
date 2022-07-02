@@ -3,6 +3,8 @@ package codes.ztereohype.autotechno.client;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class ClientWrapper {
     private final MinecraftClient client;
 
@@ -25,6 +27,6 @@ public class ClientWrapper {
     }
 
     public void sendMessage(String messageToSend) {
-        client.player.sendChatMessage(messageToSend);
+        Objects.requireNonNull(client.player).sendChatMessage(messageToSend);
     }
 }
