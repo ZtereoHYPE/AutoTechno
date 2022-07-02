@@ -65,8 +65,8 @@ public class EventDetector {
 
         serverMessageEvents.get(Server.MINEMEN).put("Match Results", Event.END_GAME);
 
-        //todo: mineplex support (this is said both on start and end)
-//        serverMessageEvents.get(Server.MINEPLEX).put("Chat> Chat is no longer silenced.", Event.END_GAME);
+        //todo: proper mineplex support (this is said both on start and end)
+        serverMessageEvents.get(Server.MINEPLEX).put("Chat> Chat is no longer silenced.", Event.END_GAME);
 
         // START STRINGS
         serverMessageEvents.get(Server.HYPIXEL).put("The game starts in 1 second!", Event.START_GAME);
@@ -88,6 +88,8 @@ public class EventDetector {
         serverMessageEvents.get(Server.PVPLAND).put("slain by " + AutoTechno.client.getClient().getSession().getUsername(), Event.KILL);
 
         serverMessageEvents.get(Server.MINEMEN).put("killed by " + AutoTechno.client.getClient().getSession().getUsername() + "!", Event.KILL);
+
+        serverMessageEvents.get(Server.MINEPLEX).put("Death> You killed", Event.KILL);
     }
 
     public @Nullable Event scanForEvent(@NotNull String message) {
