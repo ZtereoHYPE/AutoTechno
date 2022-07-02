@@ -4,7 +4,8 @@
   "package": "codes.ztereohype.autotechno.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "MixinChatHud"
+    "MixinChatHud",
+    "MixinClientConnection"
   ],
   "injectors": {
     "defaultRequire": 1
