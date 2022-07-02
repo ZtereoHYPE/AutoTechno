@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventDetector {
-    private static final long WAIT_TIME = 3000L;
-
-    private long lastTime = 0;
     private final MinecraftClient client = MinecraftClient.getInstance();
 
     private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<Server, Map<String, Event>>() {{
@@ -21,6 +18,7 @@ public class EventDetector {
         put(Server.BEDWARS_PRACTICE, new HashMap<>());
         put(Server.PVPLAND, new HashMap<>());
         put(Server.MINEMEN, new HashMap<>());
+        put(Server.MINEPLEX, new HashMap<>());
     }};
 
     private final boolean killMessages;
@@ -67,6 +65,9 @@ public class EventDetector {
 
         serverMessageEvents.get(Server.MINEMEN).put("Match Results", Event.END_GAME);
 
+        //todo: mineplex support (this is said both on start and end)
+//        serverMessageEvents.get(Server.MINEPLEX).put("Chat> Chat is no longer silenced.", Event.END_GAME);
+
         // START STRINGS
         serverMessageEvents.get(Server.HYPIXEL).put("The game starts in 1 second!", Event.START_GAME);
 
@@ -82,29 +83,37 @@ public class EventDetector {
         serverMessageEvents.get(Server.HYPIXEL).put("SkyWars Experience (Kill)", Event.KILL);
         serverMessageEvents.get(Server.HYPIXEL).put("coins! (Final Kill)", Event.KILL);
 
-        serverMessageEvents.get(Server.BEDWARS_PRACTICE).put(client.getSession().getUsername() + " FINAL KILL!", Event.KILL);
+        serverMessageEvents.get(Server.BEDWARS_PRACTICE).put(AutoTechno.client.getClient().getSession().getUsername() + " FINAL KILL!", Event.KILL);
 
-        serverMessageEvents.get(Server.PVPLAND).put("slain by " + client.getSession().getUsername(), Event.KILL);
+        serverMessageEvents.get(Server.PVPLAND).put("slain by " + AutoTechno.client.getClient().getSession().getUsername(), Event.KILL);
 
-        serverMessageEvents.get(Server.MINEMEN).put("killed by " + client.getSession().getUsername() + "!", Event.KILL);
+        serverMessageEvents.get(Server.MINEMEN).put("killed by " + AutoTechno.client.getClient().getSession().getUsername() + "!", Event.KILL);
     }
 
     public @Nullable Event scanForEvent(@NotNull String message) {
-        if (System.currentTimeMillis() - this.lastTime <= WAIT_TIME) return null;
-
         Server server = AutoTechno.client.getCurrentServer();
         if (server == null) return null;
-
-        this.lastTime = System.currentTimeMillis();
 
         for (String s : serverMessageEvents.get(server).keySet()) {
             Event event = null;
             if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
 
             //todo: unhorrible this
-            if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages)
+            if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages) {
                 return event;
+            }
         }
+
+//        for (Server servero : Server.values()) {
+//            for (String s : serverMessageEvents.get(servero).keySet()) {
+//                Event event = null;
+//                if (message.contains(s)) event = serverMessageEvents.get(servero).get(s);
+//
+//                //todo: unhorrible this
+//                if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages)
+//                    return event;
+//            }
+//        }
         return null;
     }
 }
