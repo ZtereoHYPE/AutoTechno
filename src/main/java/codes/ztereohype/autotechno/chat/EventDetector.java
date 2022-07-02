@@ -97,24 +97,25 @@ public class EventDetector {
         }
 
         for (String s : serverMessageEvents.get(server).keySet()) {
-            Event event = null;
-            if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
+            if (message.contains(s)) {
+                Event event = serverMessageEvents.get(server).get(s);
 
-            if (server == Server.MINEPLEX && event == Event.END_GAME) {
-                mineplexStart = !mineplexStart;
-                return mineplexStart ? Event.START_GAME : Event.END_GAME;
-            }
+                if (server == Server.MINEPLEX && event == Event.END_GAME) {
+                    mineplexStart = !mineplexStart;
+                    return mineplexStart ? Event.START_GAME : Event.END_GAME;
+                }
 
-            switch(event) {
-                case KILL:
-                    if (this.killMessages) return event;
-                    break;
-                case START_GAME:
-                    if (this.startMessages) return event;
-                    break;
-                case END_GAME:
-                    if (this.endMessages) return event;
-                    break;
+                switch (event) {
+                    case KILL:
+                        if (this.killMessages) return event;
+                        break;
+                    case START_GAME:
+                        if (this.startMessages) return event;
+                        break;
+                    case END_GAME:
+                        if (this.endMessages) return event;
+                        break;
+                }
             }
         }
         return null;

@@ -18,13 +18,13 @@ public class AutoTechnoConfig {
     public static final Path CONFIG_PATH = Paths.get("config/autotechno.json");
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-    public boolean sendEndMessages;
-    public boolean sendStartMessages;
-    public boolean sendKillMessages;
+    public final boolean sendEndMessages;
+    public final boolean sendStartMessages;
+    public final boolean sendKillMessages;
 
-    public List<String> endMessageList;
-    public List<String> startMessageList;
-    public List<String> killMessageList;
+    public final List<String> endMessageList;
+    public final List<String> startMessageList;
+    public final List<String> killMessageList;
 
     private AutoTechnoConfig(boolean sendEndMessages,
                              boolean sendStartMessages,
