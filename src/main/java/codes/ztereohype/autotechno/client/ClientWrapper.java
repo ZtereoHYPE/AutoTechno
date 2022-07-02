@@ -18,12 +18,10 @@ public class ClientWrapper {
         if (client.getCurrentServerEntry() == null) return null;
         String address = client.getCurrentServerEntry().address;
 
-        //todo: change to a matcher
-        if (address.contains("hypixel.net")) return Server.HYPIXEL;
-        else if (address.contains("bedwarspractice.club")) return Server.BEDWARS_PRACTICE;
-        else if (address.contains("pvp.land")) return Server.PVPLAND;
-        else if (address.contains("minemen.club")) return Server.MINEMEN;
-        else return null;
+        for (Server server : Server.values()) {
+            if (address.contains(server.getIp())) return server;
+        }
+        return null;
     }
 
     public void sendMessage(String messageToSend) {
