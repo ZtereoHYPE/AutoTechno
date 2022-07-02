@@ -12,8 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatHud.class)
 public abstract class MixinChatHud {
-    @Unique private static long lastTime;
-    @Unique private final static long WAIT_TIME = 3000L;
+    @Unique
+    private final static long WAIT_TIME = 3000L;
+    @Unique
+    private static long lastTime;
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
     private void sendRespect(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {

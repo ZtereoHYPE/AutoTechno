@@ -3,7 +3,6 @@ package codes.ztereohype.autotechno.chat;
 import codes.ztereohype.autotechno.AutoTechno;
 import codes.ztereohype.autotechno.client.Server;
 import codes.ztereohype.autotechno.config.AutoTechnoConfig;
-import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventDetector {
+    public static boolean mineplexStart = false;
     private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<Server, Map<String, Event>>() {{
         put(Server.HYPIXEL, new HashMap<>());
         put(Server.BEDWARS_PRACTICE, new HashMap<>());
@@ -18,12 +18,9 @@ public class EventDetector {
         put(Server.MINEMEN, new HashMap<>());
         put(Server.MINEPLEX, new HashMap<>());
     }};
-
     private final boolean killMessages;
     private final boolean startMessages;
     private final boolean endMessages;
-
-    public static boolean mineplexStart = false;
 
     public EventDetector(AutoTechnoConfig config) {
         this.endMessages = config.sendEndMessages;
