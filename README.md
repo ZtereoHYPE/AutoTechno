@@ -25,4 +25,4 @@ I do not plan on using this mod as any form of profit and it was even initially 
 
 ## License:
 
-This template is available under the [MPL-2.0](LICENSE.txt) license.
+This mod is available under the [MPL-2.0](LICENSE.txt) license.
