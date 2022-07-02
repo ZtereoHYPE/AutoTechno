@@ -103,17 +103,6 @@ public class EventDetector {
                 return event;
             }
         }
-
-//        for (Server servero : Server.values()) {
-//            for (String s : serverMessageEvents.get(servero).keySet()) {
-//                Event event = null;
-//                if (message.contains(s)) event = serverMessageEvents.get(servero).get(s);
-//
-//                //todo: unhorrible this
-//                if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages)
-//                    return event;
-//            }
-//        }
         return null;
     }
 }
