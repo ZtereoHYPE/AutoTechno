@@ -14,15 +14,18 @@ Warning. This mod is still heavily work in progress and the detection might not 
 
 ## Customising:
 
-It is possible to customise all the messages this mod sends, as well as when the mod sends them by changing the file located in your minecraft folder in `/config/autotechno.json` (only appears after having run the mod at least once)
+It is possible to customise all the messages this mod sends to add or change your favourite techno quotes, as well as when the mod sends them by changing the file located in your minecraft folder in `/config/autotechno.json` (only appears after having run the mod at least once)
 
 To disable start, end, or kill messages just change the `true`s to `false`s and to add sentences just add a string (surrounded by double quotes "like this", and with a comma separating of all of them except for the last one) in the corresponding category.
 
 
 ## Money n stuff:
 
-I do not plan on using this mod as any form of profit and it was even initially born as a personal project, but if I ever end up earning money from it through cursepoints or something I will donate 100% of the earned funds to the [curesarcoma](https://www.curesarcoma.org/) foundation. Please do not donate/sponsor to me but donate to that charity instead in case you want to support this project.
+I do not plan on using this mod as any form of profit and it was even initially born as a personal project, but if I ever end up earning money from it through cursepoints or future modrinth payouts I will donate 100% of the earned funds to the [curesarcoma](https://www.curesarcoma.org/) foundation. Please do not donate/sponsor to me but donate to that charity instead in case you want to support this project.
 
 ## License:
 
 This mod is available under the [MPL-2.0](LICENSE.txt) license.
+
+
+Rest in peace Alexander </3
