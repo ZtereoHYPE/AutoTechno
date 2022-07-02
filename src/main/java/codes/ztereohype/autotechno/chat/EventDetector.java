@@ -25,6 +25,8 @@ public class EventDetector {
     private final boolean startMessages;
     private final boolean endMessages;
 
+    private boolean mineplexStart = false;
+
     public EventDetector(AutoTechnoConfig config) {
         this.endMessages = config.sendEndMessages;
         this.killMessages = config.sendKillMessages;
@@ -65,7 +67,6 @@ public class EventDetector {
 
         serverMessageEvents.get(Server.MINEMEN).put("Match Results", Event.END_GAME);
 
-        //todo: proper mineplex support (this is said both on start and end)
         serverMessageEvents.get(Server.MINEPLEX).put("Chat> Chat is no longer silenced.", Event.END_GAME);
 
         // START STRINGS
@@ -99,6 +100,11 @@ public class EventDetector {
         for (String s : serverMessageEvents.get(server).keySet()) {
             Event event = null;
             if (message.contains(s)) event = serverMessageEvents.get(server).get(s);
+
+            if (server == Server.MINEPLEX && event == Event.END_GAME) {
+                this.mineplexStart = !mineplexStart;
+                return this.mineplexStart ? Event.START_GAME : Event.END_GAME;
+            }
 
             //todo: unhorrible this
             if (event == Event.KILL && this.killMessages || event == Event.START_GAME && this.startMessages || event == Event.END_GAME && this.endMessages) {
