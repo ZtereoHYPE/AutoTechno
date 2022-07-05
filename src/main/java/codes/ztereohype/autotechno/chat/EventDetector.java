@@ -92,8 +92,12 @@ public class EventDetector {
         Server server = AutoTechno.client.getCurrentServer();
         if (server == null) return null;
 
-        if (server == Server.MINEPLEX && message.contains("You have been sent from ") && message.contains(" to Lobby")) {
-            mineplexStart = false;
+        if (server == Server.MINEPLEX) {
+            if (message.contains("You have been sent from ") && message.contains(" to Lobby")) {
+                mineplexStart = false;
+            } else if (message.contains("1st Place")) {
+                mineplexStart = true;
+            }
         }
 
         for (String s : serverMessageEvents.get(server).keySet()) {
