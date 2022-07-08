@@ -10,6 +10,7 @@ public class AutoTechno implements ModInitializer {
     public static ClientWrapper client;
     public static EventDetector detector;
     public static MessageRandomiser messageRandomiser;
+    public static long MESSAGE_WAIT_TIME;
 
     static {
         String[] startMessages = new String[]{"Good luck, and may Techno's unmatched skill be with you",
@@ -34,7 +35,8 @@ public class AutoTechno implements ModInitializer {
                 "so long nerds",
                 "as Sun Tzu wanted"};
 
-        AutoTechnoConfig.init(true, true, true, endMessages, startMessages, killMessages);
+        AutoTechnoConfig.init(true, true, true, 3000, endMessages, startMessages, killMessages);
+        MESSAGE_WAIT_TIME = Integer.valueOf((String)AutoTechnoConfig.getProperty("MessageWaitTime"));
     }
 
     @Override

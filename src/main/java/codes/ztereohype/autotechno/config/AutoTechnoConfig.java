@@ -18,6 +18,7 @@ public class AutoTechnoConfig {
     public static void init(boolean sendEndMessages,
                                        boolean sendStartMessages,
                                        boolean sendKillMessages,
+                                       int messageWaitTime,
                                        String[] endMessages,
                                        String[] startMessages,
                                        String[] killMessages) {
@@ -30,14 +31,17 @@ public class AutoTechnoConfig {
                 CONFIG_FILE.getParentFile().mkdirs();
                 CONFIG_FILE.createNewFile();
                 YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
-                config.put("SendEndMessages", sendEndMessages);
-                config.put("SendStartMessages", sendStartMessages);
-                config.put("SendKillMessages", sendKillMessages);
-                config.put("EndMessages", endMessages);
-                config.put("StartMessages", startMessages);
-                config.put("KillMessages", killMessages);
-                writer.write(config);
+                Map<String, Object> tempConfig = new LinkedHashMap<>();
+                tempConfig.put("SendEndMessages", sendEndMessages);
+                tempConfig.put("SendStartMessages", sendStartMessages);
+                tempConfig.put("SendKillMessages", sendKillMessages);
+                tempConfig.put("MessageWaitTime", messageWaitTime);
+                tempConfig.put("EndMessages", endMessages);
+                tempConfig.put("StartMessages", startMessages);
+                tempConfig.put("KillMessages", killMessages);
+                writer.write(tempConfig);
                 writer.close();
+                init(sendEndMessages, sendStartMessages, sendKillMessages, messageWaitTime, endMessages, startMessages, killMessages);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChatHud.class)
 public abstract class MixinChatHud {
     @Unique
-    private final static long WAIT_TIME = 3000L;
-    @Unique
     private static long lastTime;
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
@@ -22,7 +20,7 @@ public abstract class MixinChatHud {
         Event event = AutoTechno.detector.scanForEvent(message.getString());
 
         if (event != null) {
-            if (System.currentTimeMillis() - lastTime <= WAIT_TIME) return;
+            if (System.currentTimeMillis() - lastTime <= AutoTechno.MESSAGE_WAIT_TIME) return;
             lastTime = System.currentTimeMillis();
 
             String technoMessage = AutoTechno.messageRandomiser.getRandomMessage(event);
