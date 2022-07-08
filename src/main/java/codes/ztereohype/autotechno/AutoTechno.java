@@ -7,7 +7,6 @@ import codes.ztereohype.autotechno.config.AutoTechnoConfig;
 import net.fabricmc.api.ModInitializer;
 
 public class AutoTechno implements ModInitializer {
-    public static final AutoTechnoConfig config;
     public static ClientWrapper client;
     public static EventDetector detector;
     public static MessageRandomiser messageRandomiser;
@@ -35,13 +34,13 @@ public class AutoTechno implements ModInitializer {
                 "so long nerds",
                 "as Sun Tzu wanted"};
 
-        config = AutoTechnoConfig.get(true, true, true, endMessages, startMessages, killMessages);
+        AutoTechnoConfig.init(true, true, true, endMessages, startMessages, killMessages);
     }
 
     @Override
     public void onInitialize() {
         client = new ClientWrapper();
-        detector = new EventDetector(config);
-        messageRandomiser = new MessageRandomiser(config);
+        detector = new EventDetector();
+        messageRandomiser = new MessageRandomiser();
     }
 }

@@ -1,62 +1,50 @@
 package codes.ztereohype.autotechno.config;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.commons.io.FilenameUtils;
+import com.esotericsoftware.yamlbeans.YamlReader;
+import com.esotericsoftware.yamlbeans.YamlWriter;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AutoTechnoConfig {
-    public static final Path CONFIG_PATH = Paths.get("config/autotechno.json");
-    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+    private static final File CONFIG_FILE = Paths.get("config/autotechno.yml").toFile();
+    private static Map<String, Object> config = new LinkedHashMap<>();
 
-    public final boolean sendEndMessages;
-    public final boolean sendStartMessages;
-    public final boolean sendKillMessages;
-
-    public final List<String> endMessageList;
-    public final List<String> startMessageList;
-    public final List<String> killMessageList;
-
-    private AutoTechnoConfig(boolean sendEndMessages,
-                             boolean sendStartMessages,
-                             boolean sendKillMessages,
-                             String[] endMessageList,
-                             String[] startMessageList,
-                             String[] killMessageList) {
-        this.sendEndMessages = sendEndMessages;
-        this.sendStartMessages = sendStartMessages;
-        this.sendKillMessages = sendKillMessages;
-        this.endMessageList = Arrays.asList(endMessageList);
-        this.startMessageList = Arrays.asList(startMessageList);
-        this.killMessageList = Arrays.asList(killMessageList);
-    }
-
-    public static AutoTechnoConfig get(boolean endMessages,
-                                       boolean startMessages,
-                                       boolean finalMessages,
-                                       String[] endMessageList,
-                                       String[] startMessageList,
-                                       String[] killMessageList) {
+    public static void init(boolean sendEndMessages,
+                                       boolean sendStartMessages,
+                                       boolean sendKillMessages,
+                                       String[] endMessages,
+                                       String[] startMessages,
+                                       String[] killMessages) {
         try {
-            if (CONFIG_PATH.toFile().exists()) {
-                return GSON.fromJson(new String(Files.readAllBytes(CONFIG_PATH)), AutoTechnoConfig.class);
+            if (CONFIG_FILE.exists()) {
+                YamlReader reader = new YamlReader(new FileReader(CONFIG_FILE));
+                config = (Map<String, Object>) reader.read();
+                reader.close();
             } else {
-                AutoTechnoConfig config = new AutoTechnoConfig(endMessages, startMessages, finalMessages, endMessageList, startMessageList, killMessageList);
-                new File(FilenameUtils.getPath(CONFIG_PATH.toString())).mkdir();
-                Files.write(CONFIG_PATH, Collections.singleton(GSON.toJson(config)));
-                return config;
+                CONFIG_FILE.getParentFile().mkdirs();
+                CONFIG_FILE.createNewFile();
+                YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
+                config.put("SendEndMessages", sendEndMessages);
+                config.put("SendStartMessages", sendStartMessages);
+                config.put("SendKillMessages", sendKillMessages);
+                config.put("EndMessages", endMessages);
+                config.put("StartMessages", startMessages);
+                config.put("KillMessages", killMessages);
+                writer.write(config);
+                writer.close();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Object getProperty(String property) {
+        return config.get(property);
     }
 }

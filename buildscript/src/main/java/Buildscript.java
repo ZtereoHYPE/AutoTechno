@@ -43,6 +43,7 @@ public class Buildscript extends SimpleFabricProject {
     @Override
     public void getModDependencies(ModDependencyCollector d) {
         d.addMaven("https://api.modrinth.com/maven/", new MavenId("maven.modrinth", "lazydfu", Versions.LAZYDFU_VERSION), ModDependencyFlag.RUNTIME);
+        jij(d.addMaven(Maven.MAVEN_CENTRAL, new MavenId("com.esotericsoftware.yamlbeans", "yamlbeans", Versions.YAML_VERSION), ModDependencyFlag.COMPILE, ModDependencyFlag.RUNTIME));
     }
 
     @Override
