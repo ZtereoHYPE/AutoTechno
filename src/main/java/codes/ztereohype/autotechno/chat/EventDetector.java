@@ -22,10 +22,10 @@ public class EventDetector {
     private final boolean startMessages;
     private final boolean endMessages;
 
-    public EventDetector(AutoTechnoConfig config) {
-        this.endMessages = config.sendEndMessages;
-        this.killMessages = config.sendKillMessages;
-        this.startMessages = config.sendStartMessages;
+    public EventDetector() {
+        this.endMessages = AutoTechnoConfig.getProperty("SendEndMessages").equals("true");
+        this.killMessages = AutoTechnoConfig.getProperty("SendKillMessages").equals("true");
+        this.startMessages = AutoTechnoConfig.getProperty("SendStartMessages").equals("true");
         initMessages();
     }
 

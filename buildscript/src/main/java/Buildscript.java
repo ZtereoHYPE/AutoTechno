@@ -47,7 +47,9 @@ public class Buildscript extends SimpleFabricProject {
     }
 
     @Override
-    public void getModDependencies(ModDependencyCollector d) {}
+    public void getModDependencies(ModDependencyCollector d) {
+        jij(d.addMaven(Maven.MAVEN_CENTRAL, new MavenId("com.esotericsoftware.yamlbeans", "yamlbeans", Versions.YAML_VERSION), ModDependencyFlag.COMPILE, ModDependencyFlag.RUNTIME));
+    }
 
     @Override
     public BrachyuraDecompiler decompiler() {
