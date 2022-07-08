@@ -18,6 +18,8 @@ public class EventDetector {
         put(Server.MINEMEN, new HashMap<>());
         put(Server.MINEPLEX, new HashMap<>());
     }};
+
+//    private final Table<Server, Event, String> serverMessageEventsTable = new Table<>
     private final boolean killMessages;
     private final boolean startMessages;
     private final boolean endMessages;
@@ -26,10 +28,10 @@ public class EventDetector {
         this.endMessages = AutoTechnoConfig.getProperty("SendEndMessages").equals("true");
         this.killMessages = AutoTechnoConfig.getProperty("SendKillMessages").equals("true");
         this.startMessages = AutoTechnoConfig.getProperty("SendStartMessages").equals("true");
-        initMessages();
+        initTable();
     }
 
-    private void initMessages() {
+    private void initTable() {
         // END STRINGS
         serverMessageEvents.get(Server.HYPIXEL).put("Your Overall Winstreak:", Event.END_GAME);
         serverMessageEvents.get(Server.HYPIXEL).put("1st Place -", Event.END_GAME);
