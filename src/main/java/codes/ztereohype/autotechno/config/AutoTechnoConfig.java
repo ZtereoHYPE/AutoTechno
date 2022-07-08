@@ -1,5 +1,6 @@
 package codes.ztereohype.autotechno.config;
 
+import codes.ztereohype.autotechno.AutoTechno;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.esotericsoftware.yamlbeans.YamlWriter;
 
@@ -13,74 +14,82 @@ import java.util.Map;
 
 public class AutoTechnoConfig {
     private static final File CONFIG_FILE = Paths.get("config/autotechno.yml").toFile();
-    private static Map<String, Object> config = new LinkedHashMap<>();
 
-    public static void init(int configVersion,
-                            boolean sendEndMessages,
-                            boolean sendStartMessages,
-                            boolean sendKillMessages,
-                            int messageWaitTime,
-                            String[] endMessages,
-                            String[] startMessages,
-                            String[] killMessages) {
+    private static final Map<String, Object> DEFAULT_CONFIG = new LinkedHashMap<>() {{
+        put("ConfigVersion", AutoTechno.CONFIG_VERSION);
+        put("SendEndMessages", true);
+        put("SendStartMessages", true);
+        put("SendKillMessages", true);
+        put("MessageWaitTime", 3000);
+        put("EndMessages", new String[]{"Good luck, and may Techno's unmatched skill be with you",
+                "RIP Techno, you will be missed.",
+                "Let's drop kick some children!",
+                "Technoblade never dies!",
+                "So, what do you guys know about anarchy?"});
+        put("StartMessages", new String[]{"Blood for the Blood God",
+                "In the name of techno",
+                "This ones for technoblade",
+                "Officer, I drop-kicked them in self defense!",
+                "This is the second-worst thing to happen to these orphans.",
+                "Sometimes it's tough being the best",
+                "die nerd (/j)",
+                "chin up king, your crown is falling"});
+        put("KillMessages", new String[]{"gg e z",
+                "good game",
+                "Rest in Peace Technoblade",
+                "Technoblade never dies",
+                "so long nerds",
+                "as Sun Tzu wanted"});
+    }};
+
+    private static Map<String, Object> CONFIG = new LinkedHashMap<>();
+
+    public static void init() {
         try {
             if (CONFIG_FILE.exists()) {
                 YamlReader reader = new YamlReader(new FileReader(CONFIG_FILE));
-                config = (Map<String, Object>) reader.read();
+
+                CONFIG = (Map<String, Object>) reader.read();
                 reader.close();
-                if (getProperty("ConfigVersion") == null || Integer.parseInt((String) getProperty("ConfigVersion")) != configVersion) {
-                    updateConfig(configVersion, sendEndMessages, sendStartMessages, sendKillMessages, messageWaitTime, endMessages, startMessages, killMessages);
-                }
             } else {
                 CONFIG_FILE.getParentFile().mkdirs();
                 CONFIG_FILE.createNewFile();
+
                 YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
-                Map<String, Object> tempConfig = new LinkedHashMap<>();
-                tempConfig.put("ConfigVersion", configVersion);
-                tempConfig.put("SendEndMessages", sendEndMessages);
-                tempConfig.put("SendStartMessages", sendStartMessages);
-                tempConfig.put("SendKillMessages", sendKillMessages);
-                tempConfig.put("MessageWaitTime", messageWaitTime);
-                tempConfig.put("EndMessages", endMessages);
-                tempConfig.put("StartMessages", startMessages);
-                tempConfig.put("KillMessages", killMessages);
-                writer.write(tempConfig);
+
+                writer.write(DEFAULT_CONFIG);
                 writer.close();
-                init(configVersion, sendEndMessages, sendStartMessages, sendKillMessages, messageWaitTime, endMessages, startMessages, killMessages);
             }
+
+            if (getProperty("ConfigVersion") == null || Integer.parseInt((String) getProperty("ConfigVersion")) != Integer.parseInt((String) CONFIG.get("ConfigVersion"))) {
+                updateConfig();
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static Object getProperty(String property) {
-        return config.get(property);
+        return CONFIG.get(property);
     }
 
-    private static void updateConfig(int configVersion,
-                                     boolean sendEndMessages,
-                                     boolean sendStartMessages,
-                                     boolean sendKillMessages,
-                                     int messageWaitTime,
-                                     String[] endMessages,
-                                     String[] startMessages,
-                                     String[] killMessages) {
+    private static void updateConfig() {
         try {
             CONFIG_FILE.delete();
             CONFIG_FILE.createNewFile();
+
             YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
-            Map<String, Object> tempConfig = new LinkedHashMap<>();
-            tempConfig.put("ConfigVersion", configVersion);
-            tempConfig.put("SendEndMessages", getProperty("SendEndMessages") == null ? sendEndMessages : getProperty("SendEndMessages"));
-            tempConfig.put("SendStartMessages", getProperty("SendStartMessages") == null ? sendStartMessages : getProperty("SendEndMessages"));
-            tempConfig.put("SendKillMessages", getProperty("SendKillMessages") == null ? sendKillMessages : getProperty("SendEndMessages"));
-            tempConfig.put("MessageWaitTime", getProperty("MessageWaitTime") == null ? messageWaitTime : getProperty("MessageWaitTime"));
-            tempConfig.put("EndMessages", getProperty("EndMessages") == null ? endMessages : getProperty("EndMessages"));
-            tempConfig.put("StartMessages", getProperty("StartMessages") == null ? startMessages : getProperty("StartMessages"));
-            tempConfig.put("KillMessages", getProperty("KillMessages") == null ? killMessages : getProperty("KillMessages"));
-            writer.write(tempConfig);
+
+            Map<String, Object> updatedConfig = new LinkedHashMap<>();
+
+            for (String key : DEFAULT_CONFIG.keySet()) {
+                Object property = getProperty(key);
+                updatedConfig.put(key, property == null ? DEFAULT_CONFIG.get(key) : property);
+            }
+
+            writer.write(updatedConfig);
             writer.close();
-            init(configVersion, sendEndMessages, sendStartMessages, sendKillMessages, messageWaitTime, endMessages, startMessages, killMessages);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
