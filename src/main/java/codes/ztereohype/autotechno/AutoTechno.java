@@ -35,8 +35,8 @@ public class AutoTechno implements ModInitializer {
                 "so long nerds",
                 "as Sun Tzu wanted"};
 
-        AutoTechnoConfig.init(true, true, true, 3000, endMessages, startMessages, killMessages);
-        MESSAGE_WAIT_TIME = Integer.valueOf((String)AutoTechnoConfig.getProperty("MessageWaitTime"));
+        AutoTechnoConfig.init(1, true, true, true, 3000, endMessages, startMessages, killMessages);
+        MESSAGE_WAIT_TIME = Integer.parseInt((String)AutoTechnoConfig.getProperty("MessageWaitTime"));
     }
 
     @Override
