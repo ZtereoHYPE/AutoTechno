@@ -10,7 +10,6 @@ public class AutoTechno implements ModInitializer {
     public static ClientWrapper client;
     public static EventDetector detector;
     public static MessageRandomiser messageRandomiser;
-    public static int CONFIG_VERSION = 1;
 
     @Override
     public void onInitialize() {
