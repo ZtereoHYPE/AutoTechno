@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "autotechno",
-  "version": "0.2",
+  "version": "{dev-env}",
   "name": "AutoTechno",
   "description": "Automatically posts Techno respect messages at various game events.",
   "authors": [
