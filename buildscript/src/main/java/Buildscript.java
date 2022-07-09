@@ -13,7 +13,6 @@ import io.github.coolcrabs.brachyura.maven.Maven;
 import io.github.coolcrabs.brachyura.maven.MavenId;
 import io.github.coolcrabs.brachyura.minecraft.Minecraft;
 import io.github.coolcrabs.brachyura.minecraft.VersionMeta;
-import io.github.coolcrabs.brachyura.processing.ProcessorChain;
 import net.fabricmc.mappingio.tree.MappingTree;
 
 public class Buildscript extends SimpleFabricProject {
@@ -38,16 +37,6 @@ public class Buildscript extends SimpleFabricProject {
     }
 
     @Override
-    public String getModId() {
-        return "autotechno";
-    }
-
-    @Override
-    public String getVersion() {
-        return Versions.MOD_VERSION;
-    }
-
-    @Override
     public void getModDependencies(ModDependencyCollector d) {
         jij(d.addMaven(Maven.MAVEN_CENTRAL, new MavenId("com.esotericsoftware.yamlbeans", "yamlbeans", Versions.YAML_VERSION), ModDependencyFlag.COMPILE, ModDependencyFlag.RUNTIME));
     }
@@ -62,12 +51,6 @@ public class Buildscript extends SimpleFabricProject {
     public Path getBuildJarPath() {
         // Changes the jar file name
         return getBuildLibsDir().resolve(getModId() + "-" + "mc" + createMcVersion().version + "-" + getVersion() + ".jar");
-    }
-
-    @Override
-    public ProcessorChain resourcesProcessingChain() {
-        // Adds version to fabric.mod.json
-        return new ProcessorChain(super.resourcesProcessingChain(), new FmjVersionFixer(this));
     }
 
     public class IntermediaryPatcher extends SimpleFabricContext {
