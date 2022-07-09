@@ -16,7 +16,6 @@ public class AutoTechnoConfig {
     private static final File CONFIG_FILE = Paths.get("config/autotechno.yml").toFile();
 
     private static final Map<String, Object> DEFAULT_CONFIG = new LinkedHashMap<>() {{
-        put("ConfigVersion", AutoTechno.CONFIG_VERSION);
         put("SendEndMessages", true);
         put("SendStartMessages", true);
         put("SendKillMessages", true);
@@ -61,7 +60,7 @@ public class AutoTechnoConfig {
                 writer.close();
             }
 
-            if (getProperty("ConfigVersion") == null || Integer.parseInt((String) getProperty("ConfigVersion")) != Integer.parseInt((String) CONFIG.get("ConfigVersion"))) {
+            if (!CONFIG.keySet().equals(DEFAULT_CONFIG.keySet())) {
                 updateConfig();
             }
 
