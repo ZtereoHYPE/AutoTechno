@@ -19,7 +19,6 @@ public class EventDetector {
         put(Server.MINEPLEX, new HashMap<>());
     }};
 
-//    private final Table<Server, Event, String> serverMessageEventsTable = new Table<>
     private final boolean killMessages;
     private final boolean startMessages;
     private final boolean endMessages;
