@@ -15,7 +15,7 @@ import java.util.Map;
 public class AutoTechnoConfig {
     private static final File CONFIG_FILE = Paths.get("config/autotechno.yml").toFile();
 
-    private static final Map<String, Object> DEFAULT_CONFIG = new LinkedHashMap<>() {{
+    private static final Map<String, Object> DEFAULT_CONFIG = new LinkedHashMap<String, Object>() {{
         put("SendEndMessages", true);
         put("SendStartMessages", true);
         put("SendKillMessages", true);
