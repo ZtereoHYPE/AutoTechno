@@ -20,12 +20,18 @@ public class AutoTechnoConfig {
         put("SendStartMessages", true);
         put("SendKillMessages", true);
         put("MessageWaitTime", 3000);
-        put("EndMessages", new String[]{"Good luck, and may Techno's unmatched skill be with you",
+        put("EndMessages", new String[]{"gg e z",
+                "good game",
+                "Rest in Peace Technoblade",
+                "Technoblade never dies",
+                "so long nerds",
+                "as Sun Tzu wanted"});
+        put("StartMessages", new String[]{"Good luck, and may Techno's unmatched skill be with you",
                 "RIP Techno, you will be missed.",
                 "Let's drop kick some children!",
                 "Technoblade never dies!",
                 "So, what do you guys know about anarchy?"});
-        put("StartMessages", new String[]{"Blood for the Blood God",
+        put("KillMessages", new String[]{"Blood for the Blood God",
                 "In the name of techno",
                 "This ones for technoblade",
                 "Officer, I drop-kicked them in self defense!",
@@ -33,12 +39,6 @@ public class AutoTechnoConfig {
                 "Sometimes it's tough being the best",
                 "die nerd (/j)",
                 "chin up king, your crown is falling"});
-        put("KillMessages", new String[]{"gg e z",
-                "good game",
-                "Rest in Peace Technoblade",
-                "Technoblade never dies",
-                "so long nerds",
-                "as Sun Tzu wanted"});
     }};
 
     private static Map<String, Object> CONFIG = new LinkedHashMap<>();
