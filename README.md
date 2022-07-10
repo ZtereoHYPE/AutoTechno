@@ -14,9 +14,9 @@ Warning. This mod is still heavily work in progress and the detection might not 
 
 ## Customising:
 
-It is possible to customise all the messages this mod sends to add or change your favourite techno quotes, as well as when the mod sends them by changing the file located in your minecraft folder in `/config/autotechno.json` (only appears after having run the mod at least once)
+It is possible to customise all the messages this mod sends to add or change your favourite techno quotes, when the mod sends them, and how often the mod sends them by changing the file located in your minecraft folder in `/config/autotechno.yml` (only appears after having run the mod at least once).
 
-To disable start, end, or kill messages just change the `true`s to `false`s and to add sentences just add a string (surrounded by double quotes "like this", and with a comma separating of all of them except for the last one) in the corresponding category.
+To disable start, end, or kill messages just change the `true`s to `false`s and to add sentences just add a string (with '- ' before it) in the corresponding category.
 
 
 ## Money n stuff:
