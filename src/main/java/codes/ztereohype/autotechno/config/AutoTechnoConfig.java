@@ -50,6 +50,10 @@ public class AutoTechnoConfig {
 
                 CONFIG = (Map<String, Object>) reader.read();
                 reader.close();
+
+                if (!CONFIG.keySet().equals(DEFAULT_CONFIG.keySet())) {
+                    updateConfig();
+                }
             } else {
                 CONFIG_FILE.getParentFile().mkdirs();
                 CONFIG_FILE.createNewFile();
@@ -58,12 +62,9 @@ public class AutoTechnoConfig {
 
                 writer.write(DEFAULT_CONFIG);
                 writer.close();
-            }
 
-            if (!CONFIG.keySet().equals(DEFAULT_CONFIG.keySet())) {
-                updateConfig();
+                init();
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -89,6 +90,8 @@ public class AutoTechnoConfig {
 
             writer.write(updatedConfig);
             writer.close();
+
+            init();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
