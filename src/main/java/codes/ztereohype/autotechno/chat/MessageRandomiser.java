@@ -11,10 +11,10 @@ public class MessageRandomiser {
     private static final Random RANDOM = new Random();
     private final Map<Event, List<String>> messagesMap = new HashMap<>();
 
-    public MessageRandomiser(AutoTechnoConfig config) {
-        messagesMap.put(Event.START_GAME, config.startMessageList);
-        messagesMap.put(Event.END_GAME, config.endMessageList);
-        messagesMap.put(Event.KILL, config.killMessageList);
+    public MessageRandomiser() {
+        messagesMap.put(Event.START_GAME, (List<String>) AutoTechnoConfig.getProperty("StartMessages"));
+        messagesMap.put(Event.END_GAME, (List<String>) AutoTechnoConfig.getProperty("EndMessages"));
+        messagesMap.put(Event.KILL, (List<String>) AutoTechnoConfig.getProperty("KillMessages"));
     }
 
     public String getRandomMessage(Event event) {

@@ -1,60 +1,97 @@
 package codes.ztereohype.autotechno.config;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.commons.io.FilenameUtils;
+import codes.ztereohype.autotechno.AutoTechno;
+import com.esotericsoftware.yamlbeans.YamlReader;
+import com.esotericsoftware.yamlbeans.YamlWriter;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AutoTechnoConfig {
-    public static final Path CONFIG_PATH = Paths.get("config/autotechno.json");
-    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+    private static final File CONFIG_FILE = Paths.get("config/autotechno.yml").toFile();
 
-    public final boolean sendEndMessages;
-    public final boolean sendStartMessages;
-    public final boolean sendKillMessages;
+    private static final Map<String, Object> DEFAULT_CONFIG = new LinkedHashMap<>() {{
+        put("SendEndMessages", true);
+        put("SendStartMessages", true);
+        put("SendKillMessages", true);
+        put("MessageWaitTime", 3000);
+        put("EndMessages", new String[]{"gg e z",
+                "good game",
+                "Rest in Peace Technoblade",
+                "Technoblade never dies",
+                "so long nerds",
+                "as Sun Tzu wanted"});
+        put("StartMessages", new String[]{"Good luck, and may Techno's unmatched skill be with you",
+                "RIP Techno, you will be missed.",
+                "Let's drop kick some children!",
+                "Technoblade never dies!",
+                "So, what do you guys know about anarchy?"});
+        put("KillMessages", new String[]{"Blood for the Blood God",
+                "In the name of techno",
+                "This ones for technoblade",
+                "Officer, I drop-kicked them in self defense!",
+                "This is the second-worst thing to happen to these orphans.",
+                "Sometimes it's tough being the best",
+                "die nerd (/j)",
+                "chin up king, your crown is falling"});
+    }};
 
-    public final List<String> endMessageList;
-    public final List<String> startMessageList;
-    public final List<String> killMessageList;
+    private static Map<String, Object> CONFIG = new LinkedHashMap<>();
 
-    private AutoTechnoConfig(boolean sendEndMessages,
-                             boolean sendStartMessages,
-                             boolean sendKillMessages,
-                             String[] endMessageList,
-                             String[] startMessageList,
-                             String[] killMessageList) {
-        this.sendEndMessages = sendEndMessages;
-        this.sendStartMessages = sendStartMessages;
-        this.sendKillMessages = sendKillMessages;
-        this.endMessageList = Arrays.asList(endMessageList);
-        this.startMessageList = Arrays.asList(startMessageList);
-        this.killMessageList = Arrays.asList(killMessageList);
+    public static void init() {
+        try {
+            if (CONFIG_FILE.exists()) {
+                YamlReader reader = new YamlReader(new FileReader(CONFIG_FILE));
+
+                CONFIG = (Map<String, Object>) reader.read();
+                reader.close();
+
+                if (!CONFIG.keySet().equals(DEFAULT_CONFIG.keySet())) {
+                    updateConfig();
+                }
+            } else {
+                CONFIG_FILE.getParentFile().mkdirs();
+                CONFIG_FILE.createNewFile();
+
+                YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
+
+                writer.write(DEFAULT_CONFIG);
+                writer.close();
+
+                init();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static AutoTechnoConfig get(boolean endMessages,
-                                       boolean startMessages,
-                                       boolean finalMessages,
-                                       String[] endMessageList,
-                                       String[] startMessageList,
-                                       String[] killMessageList) {
+    public static Object getProperty(String property) {
+        return CONFIG.get(property);
+    }
+
+    private static void updateConfig() {
         try {
-            if (CONFIG_PATH.toFile().exists()) {
-                return GSON.fromJson(new String(Files.readAllBytes(CONFIG_PATH)), AutoTechnoConfig.class);
-            } else {
-                AutoTechnoConfig config = new AutoTechnoConfig(endMessages, startMessages, finalMessages, endMessageList, startMessageList, killMessageList);
-                new File(FilenameUtils.getPath(CONFIG_PATH.toString())).mkdir();
-                Files.write(CONFIG_PATH, Collections.singleton(GSON.toJson(config)));
-                return config;
+            CONFIG_FILE.delete();
+            CONFIG_FILE.createNewFile();
+
+            YamlWriter writer = new YamlWriter(new FileWriter(CONFIG_FILE));
+
+            Map<String, Object> updatedConfig = new LinkedHashMap<>();
+
+            for (String key : DEFAULT_CONFIG.keySet()) {
+                Object property = getProperty(key);
+                updatedConfig.put(key, property == null ? DEFAULT_CONFIG.get(key) : property);
             }
+
+            writer.write(updatedConfig);
+            writer.close();
+
+            init();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

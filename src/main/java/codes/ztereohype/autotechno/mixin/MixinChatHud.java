@@ -2,6 +2,7 @@ package codes.ztereohype.autotechno.mixin;
 
 import codes.ztereohype.autotechno.AutoTechno;
 import codes.ztereohype.autotechno.chat.Event;
+import codes.ztereohype.autotechno.config.AutoTechnoConfig;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChatHud.class)
 public abstract class MixinChatHud {
     @Unique
-    private final static long WAIT_TIME = 3000L;
-    @Unique
     private static long lastTime;
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
@@ -22,7 +21,7 @@ public abstract class MixinChatHud {
         Event event = AutoTechno.detector.scanForEvent(message.getString());
 
         if (event != null) {
-            if (System.currentTimeMillis() - lastTime <= WAIT_TIME) return;
+            if (System.currentTimeMillis() - lastTime <= Integer.parseInt((String) AutoTechnoConfig.getProperty("MessageWaitTime"))) return;
             lastTime = System.currentTimeMillis();
 
             String technoMessage = AutoTechno.messageRandomiser.getRandomMessage(event);

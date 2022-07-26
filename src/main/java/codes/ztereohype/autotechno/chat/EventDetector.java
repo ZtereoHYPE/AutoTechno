@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class EventDetector {
     public static boolean mineplexStart = false;
+
     private final Map<Server, Map<String, Event>> serverMessageEvents = new HashMap<>() {{
         put(Server.HYPIXEL, new HashMap<>());
         put(Server.BEDWARS_PRACTICE, new HashMap<>());
@@ -18,18 +19,19 @@ public class EventDetector {
         put(Server.MINEMEN, new HashMap<>());
         put(Server.MINEPLEX, new HashMap<>());
     }};
+
     private final boolean killMessages;
     private final boolean startMessages;
     private final boolean endMessages;
 
-    public EventDetector(AutoTechnoConfig config) {
-        this.endMessages = config.sendEndMessages;
-        this.killMessages = config.sendKillMessages;
-        this.startMessages = config.sendStartMessages;
-        initMessages();
+    public EventDetector() {
+        this.endMessages = AutoTechnoConfig.getProperty("SendEndMessages").equals("true");
+        this.killMessages = AutoTechnoConfig.getProperty("SendKillMessages").equals("true");
+        this.startMessages = AutoTechnoConfig.getProperty("SendStartMessages").equals("true");
+        initTable();
     }
 
-    private void initMessages() {
+    private void initTable() {
         // END STRINGS
         serverMessageEvents.get(Server.HYPIXEL).put("Your Overall Winstreak:", Event.END_GAME);
         serverMessageEvents.get(Server.HYPIXEL).put("1st Place -", Event.END_GAME);
@@ -92,8 +94,12 @@ public class EventDetector {
         Server server = AutoTechno.client.getCurrentServer();
         if (server == null) return null;
 
-        if (server == Server.MINEPLEX && message.contains("You have been sent from ") && message.contains(" to Lobby")) {
-            mineplexStart = false;
+        if (server == Server.MINEPLEX) {
+            if (message.contains("You have been sent from ") && message.contains(" to Lobby")) {
+                mineplexStart = false;
+            } else if (message.contains("1st Place")) {
+                mineplexStart = true;
+            }
         }
 
         for (String s : serverMessageEvents.get(server).keySet()) {
