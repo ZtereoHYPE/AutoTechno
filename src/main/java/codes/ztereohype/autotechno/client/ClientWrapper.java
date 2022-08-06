@@ -27,6 +27,6 @@ public class ClientWrapper {
     }
 
     public void sendMessage(String messageToSend) {
-        Objects.requireNonNull(client.player).sendChatMessage(messageToSend);
+        Objects.requireNonNull(client.player).sendChatMessage(messageToSend, null);
     }
 }

@@ -1,6 +1,5 @@
 package codes.ztereohype.autotechno.config;
 
-import codes.ztereohype.autotechno.AutoTechno;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.esotericsoftware.yamlbeans.YamlWriter;
 

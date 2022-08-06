@@ -1,4 +1,5 @@
 import java.nio.file.Path;
+
 import io.github.coolcrabs.brachyura.decompiler.BrachyuraDecompiler;
 import io.github.coolcrabs.brachyura.decompiler.fernflower.FernflowerDecompiler;
 import io.github.coolcrabs.brachyura.fabric.FabricContext.ModDependencyCollector;

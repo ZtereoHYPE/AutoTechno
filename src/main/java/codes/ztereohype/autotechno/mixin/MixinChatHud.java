@@ -4,6 +4,8 @@ import codes.ztereohype.autotechno.AutoTechno;
 import codes.ztereohype.autotechno.chat.Event;
 import codes.ztereohype.autotechno.config.AutoTechnoConfig;
 import net.minecraft.client.gui.hud.ChatHud;
+import net.minecraft.client.gui.hud.MessageIndicator;
+import net.minecraft.network.message.MessageSignatureData;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,8 +18,8 @@ public abstract class MixinChatHud {
     @Unique
     private static long lastTime;
 
-    @Inject(method = "addMessage(Lnet/minecraft/text/Text;IIZ)V", at = @At("HEAD"))
-    private void sendRespect(Text message, int messageId, int timestamp, boolean bl, CallbackInfo ci) {
+    @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;ILnet/minecraft/client/gui/hud/MessageIndicator;Z)V", at = @At("HEAD"))
+    private void sendRespect(Text message, MessageSignatureData signature, int ticks, MessageIndicator indicator, boolean refresh, CallbackInfo ci) {
         Event event = AutoTechno.detector.scanForEvent(message.getString());
 
         if (event != null) {
