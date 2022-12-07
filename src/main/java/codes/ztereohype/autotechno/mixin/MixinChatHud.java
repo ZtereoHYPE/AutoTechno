@@ -25,7 +25,6 @@ public abstract class MixinChatHud {
         if (event != null) {
             if (System.currentTimeMillis() - lastTime <= Integer.parseInt((String) AutoTechnoConfig.getProperty("MessageWaitTime"))) return;
             lastTime = System.currentTimeMillis();
-
             String technoMessage = AutoTechno.messageRandomiser.getRandomMessage(event);
             AutoTechno.client.sendMessage(technoMessage);
         }

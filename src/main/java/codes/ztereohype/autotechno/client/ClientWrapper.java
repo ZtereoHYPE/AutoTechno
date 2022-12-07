@@ -28,6 +28,6 @@ public class ClientWrapper {
     }
 
     public void sendMessage(String messageToSend) {
-        client.getNetworkHandler().sendChatMessage(messageToSend);
+        Objects.requireNonNull(client.getNetworkHandler()).sendChatMessage(messageToSend);
     }
 }
